@@ -1,6 +1,6 @@
 FROM phusion/baseimage:0.11
 
-ENV DENO_VERSION=0.2.8
+ENV DENO_VERSION=0.2.10
 
 RUN apt-get -qq install -y curl && \
     curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno_linux_x64.gz --output deno.gz && \

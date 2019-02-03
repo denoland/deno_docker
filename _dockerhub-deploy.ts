@@ -1,7 +1,7 @@
 import {run} from "deno";
 
 
-const DENO_VERSION = '0.2.8';
+const DENO_VERSION = '0.2.10';
 
 
 async function main(){
