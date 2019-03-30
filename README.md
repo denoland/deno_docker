@@ -7,7 +7,7 @@ These are published on Dockerhub at [hayd/deno](https://hub.docker.com/r/hayd/de
 For example:
 
 ```Dockerfile
-FROM hayd/deno:alpine-0.3.4
+FROM hayd/deno:alpine-0.3.5
 
 EXPOSE 1993
 

@@ -1,6 +1,6 @@
 FROM debian:stretch-slim
 
-ENV DENO_VERSION=0.3.4
+ENV DENO_VERSION=0.3.5
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq update && \
