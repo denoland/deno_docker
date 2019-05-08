@@ -1,7 +1,7 @@
 The ENTRYPOINT line in the Dockerfile determines what is run.
 
 ```
-ENTRYPOINT ["deno", "--allow-net", "main.ts"]
+ENTRYPOINT ["deno", "run", "--allow-net", "main.ts"]
 ```
 
 Note: That the listen port (1993), must match with the EXPOSED port in the Dockerfile.
