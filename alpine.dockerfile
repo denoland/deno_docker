@@ -9,5 +9,5 @@ RUN apk add --no-cache curl && \
     mv deno /bin/deno && \
     apk del curl
 
-ENTRYPOINT ["deno", "https://deno.land/thumb.ts"]
+ENTRYPOINT ["deno", "run", "https://deno.land/thumb.ts"]
 

@@ -11,5 +11,5 @@ RUN apt-get -qq install -y curl && \
     apt-get -qq clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENTRYPOINT ["deno", "https://deno.land/thumb.ts"]
+ENTRYPOINT ["deno", "run", "https://deno.land/thumb.ts"]
 

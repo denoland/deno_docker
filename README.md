@@ -14,7 +14,7 @@ EXPOSE 1993
 WORKDIR /app
 ADD . /app
 
-ENTRYPOINT ["deno", "--allow-net", "main.ts"]
+ENTRYPOINT ["deno", "run", "--allow-net", "main.ts"]
 ```
 
 and run locally:
