@@ -3,7 +3,7 @@ FROM hayd/deno:alpine-0.6.0
 EXPOSE 1993
 
 WORKDIR /app
-ENV DENO_DIR /app/.build/
+ENV DENO_DIR /cache/
 
 COPY deps.ts /app
 RUN deno fetch deps.ts
