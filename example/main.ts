@@ -1,4 +1,4 @@
-import { serve } from "https://deno.land/std/http/server.ts";
+import { serve } from "./deps.ts";
 
 const PORT = 1993;
 const s = serve(`0.0.0.0:${PORT}`);
