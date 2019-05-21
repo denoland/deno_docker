@@ -12,7 +12,14 @@ FROM hayd/deno:alpine-0.6.0
 EXPOSE 1993
 
 WORKDIR /app
+ENV DENO_DIR /cache/
+
+# cache the deps as a layer (this is re-run only when deps.ts is modified)
+COPY deps.ts /app
+RUN deno fetch deps.ts
 ADD . /app
+# compile the main app so that it doesn't need to be compiled at each startup
+RUN deno fetch main.ts
 
 ENTRYPOINT ["deno", "run", "--allow-net", "main.ts"]
 ```
