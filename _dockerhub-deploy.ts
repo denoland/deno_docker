@@ -1,7 +1,7 @@
 const { run } = Deno;
 
 
-const DENO_VERSION = '0.6.0';
+const DENO_VERSION = '0.7.0';
 
 
 async function main(){

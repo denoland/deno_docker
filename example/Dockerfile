@@ -1,13 +1,12 @@
-FROM hayd/deno:alpine-0.6.0
+FROM hayd/deno:alpine-0.7.0
 
 EXPOSE 1993
 
 WORKDIR /app
-ENV DENO_DIR /cache/
 
-COPY deps.ts /app
+COPY deps.ts .
 RUN deno fetch deps.ts
-ADD . /app
+ADD . .
 RUN deno fetch main.ts
 
 ENTRYPOINT ["deno", "run", "--allow-net", "main.ts"]
