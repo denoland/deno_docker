@@ -1,8 +1,10 @@
 FROM phusion/baseimage:0.11
 
-ENV DENO_VERSION=0.7.0
+ENV DENO_VERSION=0.11.0
 
-RUN apt-get -qq install -y curl && \
+RUN apt-get -qq update && \
+    apt-get upgrade -y -o Dpkg::Options::="--force-confold" && \
+    apt-get -qq install -y curl && \
     curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno_linux_x64.gz --output deno.gz && \
     gunzip deno.gz && \
     chmod 777 deno && \
@@ -14,7 +16,7 @@ RUN apt-get -qq install -y curl && \
 RUN useradd --uid 1993 --user-group deno && \
     mkdir /deno-dir/ && \
     chown deno:deno /deno-dir/
-USER deno
+# USER deno
 ENV DENO_DIR /deno-dir/
 
-ENTRYPOINT ["deno", "run", "https://deno.land/thumb.ts"]
+ENTRYPOINT ["deno", "run", "https://deno.land/welcome.ts"]

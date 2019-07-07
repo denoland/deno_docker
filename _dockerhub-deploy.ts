@@ -1,7 +1,7 @@
 const { run } = Deno;
 
 
-const DENO_VERSION = '0.7.0';
+const DENO_VERSION = '0.11.0';
 
 
 async function main(){
@@ -20,7 +20,7 @@ async function main(){
     }
  
     const p2 = run({
-        args: ["docker", "run", "-it", name],
+        args: ["docker", "run", "-it", `hayd/deno:${name}-${DENO_VERSION}`],
         stdout: "piped",
     });
     const s2 = await p2.status();

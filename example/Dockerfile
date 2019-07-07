@@ -1,9 +1,10 @@
-FROM hayd/deno:alpine-0.7.0
+FROM hayd/deno:alpine-0.11.0
 
 EXPOSE 1993
 
 WORKDIR /app
 
+USER deno
 COPY deps.ts .
 RUN deno fetch deps.ts
 ADD . .

@@ -1,6 +1,6 @@
-FROM debian:stretch-slim
+FROM debian:stable-20190610-slim
 
-ENV DENO_VERSION=0.7.0
+ENV DENO_VERSION=0.11.0
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq update && \
@@ -15,8 +15,8 @@ RUN apt-get -qq update && \
 RUN useradd --uid 1993 --user-group deno && \
     mkdir /deno-dir/ && \
     chown deno:deno /deno-dir/
-USER deno
+# USER deno
 ENV DENO_DIR /deno-dir/
 
 
-ENTRYPOINT ["deno", "run", "https://deno.land/thumb.ts"]
+ENTRYPOINT ["deno", "run", "https://deno.land/welcome.ts"]
