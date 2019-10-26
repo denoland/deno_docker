@@ -13,13 +13,19 @@ EXPOSE 1993
 
 WORKDIR /app
 
-# cache the deps as a layer (this is re-run only when deps.ts is modified)
+# Prefer not to run as root.
+USER deno
+
+# Cache the dependencies as a layer (this is re-run only when deps.ts is modified).
+# Ideally this will download and compile _all_ external files used in main.ts.
 COPY deps.ts /app
 RUN deno fetch deps.ts
 
+# These steps will be re-run upon each file change in your working directory:
 ADD . /app
-# compile the main app so that it doesn't need to be compiled at each startup
+# Compile the main app so that it doesn't need to be compiled each startup/entry.
 RUN deno fetch main.ts
+
 ENTRYPOINT ["deno", "run", "--allow-net", "main.ts"]
 ```
 
@@ -31,6 +37,6 @@ $ docker build -t app . && docker run -it --init -p 1993:1993 app
 
 See example directory.
 
-Note: Dockerfiles are run with USER `deno` and DENO_DIR is set to `/deno-dir/`.
+Note: Dockerfiles provide a USER `deno` and DENO_DIR is set to `/deno-dir/` (which can be overridden).
 
 _If running multiple deno instances within the same image you can mount this directory as a shared volume._
