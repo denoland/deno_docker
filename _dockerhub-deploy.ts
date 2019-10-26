@@ -1,10 +1,10 @@
 const { run } = Deno;
 
 
-const DENO_VERSION = '0.11.0';
+const DENO_VERSION = '0.21.0';
 
 
-async function main(){
+window.onload = async () => {
   console.log("Building and pushing", DENO_VERSION);
   for (let name of ["alpine", "debian", "ubuntu"]) {
     const p1 = run({
@@ -43,7 +43,4 @@ async function main(){
       return;
     }
   }
-}
-
-main();
-
+};

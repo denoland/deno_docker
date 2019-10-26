@@ -1,6 +1,6 @@
 FROM debian:stable-20190610-slim
 
-ENV DENO_VERSION=0.11.0
+ENV DENO_VERSION=0.21.0
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq update && \
@@ -19,4 +19,4 @@ RUN useradd --uid 1993 --user-group deno && \
 ENV DENO_DIR /deno-dir/
 
 
-ENTRYPOINT ["deno", "run", "https://deno.land/welcome.ts"]
+ENTRYPOINT ["deno", "run", "https://deno.land/std/examples/welcome.ts"]
