@@ -18,4 +18,3 @@ In another terminal or browser you can access:
 $ curl localhost:1993
 Hello World
 ```
-

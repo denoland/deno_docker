@@ -1,7 +1,7 @@
 const { run } = Deno;
 
 
-const DENO_VERSION = '0.21.0';
+const DENO_VERSION = '0.22.0';
 
 
 window.onload = async () => {
