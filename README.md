@@ -4,6 +4,11 @@ Docker files for [deno](https://github.com/denoland/deno).
 
 These are published on Dockerhub at [hayd/deno](https://hub.docker.com/r/hayd/deno).
 
+
+_This also includes an example of using deno on AWS Lambda in the /aws-lambda directory._
+
+---
+
 For example:
 
 ```Dockerfile

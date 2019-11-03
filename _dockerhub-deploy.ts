@@ -46,3 +46,5 @@ for (const name of ["alpine", "debian", "ubuntu"]) {
     Deno.exit(1);
   }
 }
+
+// TODO build amazonlinux-1.dockerfile and upload binary.
