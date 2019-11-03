@@ -1,10 +1,13 @@
+# WARNING: This is not working yet...
+
+
 # STEP 1
 # Build GN for alpine.
 #
 FROM alpine:3.10.1 as gn-builder
 
 # There are many like but this one is ours...
-ARG GN_COMMIT=d11184e131c5408a03c85beb94d8cb1fcba9fc8d
+ARG GN_COMMIT=152c5144ceed9592c20f0c8fd55769646077569b
 
 # Note: This probably makes builds not reprodible but is necessary for recent llvm (9 vs 4).
 RUN sed -i -e 's/v[[:digit:]]\..*\//edge\//g' /etc/apk/repositories
@@ -61,14 +64,16 @@ RUN cp /bin/gn /deno/third_party/v8/buildtools/linux64/gn
 
 RUN cp /usr/bin/ninja /deno/third_party/depot_tools/ninja-linux64
 
-RUN cd deno/cli \
- && RUST_BACKTRACE=1 DENO_NO_BINARY_DOWNLOAD=1 DENO_BUILD_ARGS='clang_use_chrome_plugins=false treat_warnings_as_errors=false use_sysroot=false clang_base_path="/usr" use_glib=false use_custom_libcxx=false use_custom_libcxx_for_host=false use_gold=true' DENO_GN_PATH=gn cargo install --locked --root .. --path . \
- || echo error
+RUN apk add --no-cache xz
+RUN curl -fL http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-x86_64-linux-sles11.3.tar.xz \
+         --output /tmp/clang.tar.xz \
+ && tar xf /tmp/clang.tar.xz -C /tmp \
+ && rm /tmp/clang.tar.xz \
+ && mv /tmp/clang+llvm-9.0.0-x86_64-linux-sles11.3 /tmp/clang-llvm
+ENV PATH=/tmp/clang-llvm/bin:$PATH
 
-
-# TODO add more lines here to fix (so that above is cached... until it's fixed)
-# RUN cp -f /bin/ld /usr/lib/gcc/x86_64-alpine-linux-musl/9.2.0/../../../../x86_64-alpine-linux-musl/bin/ld
-# PATH=$PATH:/usr/lib/llvm9/bin RUST_BACKTRACE=1 DENO_NO_BINARY_DOWNLOAD=1 DENO_BUILD_ARGS='clang_use_chrome_plugins=false treat_warnings_as_errors=false use_sysroot=false clang_base_path="/usr" use_glib=false use_custom_libcxx=false use_custom_libcxx_for_host=false use_gold=true' DENO_GN_PATH=gn cargo install --locked --root .. --path .
+WORKDIR deno/cli
+RUN RUST_BACKTRACE=1 DENO_NO_BINARY_DOWNLOAD=1 DENO_BUILD_ARGS='clang_use_chrome_plugins=false treat_warnings_as_errors=false use_sysroot=false clang_base_path="/tmp/clang-llvm" use_glib=false use_gold=true' DENO_GN_PATH=gn cargo install --locked --root .. --path . || echo error
 
 ENTRYPOINT ["sh"]
 
