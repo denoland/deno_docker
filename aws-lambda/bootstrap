@@ -5,6 +5,8 @@ SCRIPT_DIR=$(cd $(dirname $0); pwd)
 HANDLER_NAME=$(echo "$_HANDLER" | cut -d. -f2)
 HANDLER_FILE=$(echo "$_HANDLER" | cut -d. -f1)
 
+# Note: This is a js file to avoid a runtime compilation step.
+# Hopefully $HANDLER_FILE.ts's compilation is cached in DENO_DIR.
 echo "
 import { $HANDLER_NAME } from '$LAMBDA_TASK_ROOT/$HANDLER_FILE.ts';
 const API_ROOT =
@@ -24,9 +26,12 @@ while (true) {
 }
 " > /tmp/runtime.js
 
-# This assumes that you zipped up the DENO_DIR, see README.
-cp -R $LAMBDA_TASK_ROOT/.deno_dir /tmp/deno_dir
-mkdir -p /tmp/deno_dir/gen/file$LAMBDA_TASK_ROOT
-mv /tmp/deno_dir/LAMBDA_TASK_ROOT/* /tmp/deno_dir/gen/file$LAMBDA_TASK_ROOT
+# This assumes that .deno_dir was included in the zip.
+# The idea is to workaround full, rather than relative, file paths.
+# See README.md.
+cp -R $LAMBDA_TASK_ROOT/.deno_dir /tmp/deno_dir \
+ && mkdir -p /tmp/deno_dir/gen/file$LAMBDA_TASK_ROOT \
+ && mv /tmp/deno_dir/LAMBDA_TASK_ROOT/* /tmp/deno_dir/gen/file$LAMBDA_TASK_ROOT \
+ || echo "Unable to import DENO_DIR from .deno_dir"
 
 DENO_DIR=/tmp/deno_dir $SCRIPT_DIR/amz-deno run --allow-net --allow-read /tmp/runtime.js
