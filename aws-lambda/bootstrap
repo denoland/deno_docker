@@ -53,10 +53,26 @@ import { $HANDLER_NAME } from '$LAMBDA_TASK_ROOT/$HANDLER_FILE.ts';
 const INVOCATION = '${API_ROOT}invocation/';
 while (true) {
   const next = await fetch(INVOCATION + 'next');
-  const reqId = next.headers.get('Lambda-Runtime-Aws-Request-Id');
+  const headers = next.headers;
+  const reqId = headers.get('Lambda-Runtime-Aws-Request-Id');
+  const context = {
+    functionName: '$AWS_LAMBDA_FUNCTION_NAME',
+    functionVersion: '$AWS_LAMBDA_FUNCTION_VERSION',
+    invokedFunctionArn: headers.get('lambda-runtime-invoked-function-arn'),
+    memoryLimitInMB: $AWS_LAMBDA_FUNCTION_MEMORY_SIZE,
+    awsRequestId: headers.get('lambda-runtime-aws-request-id'),
+    logGroupName: '$AWS_LAMBDA_LOG_GROUP_NAME',
+    logStreamName: '$AWS_LAMBDA_LOG_STREAM_NAME',
+    identity: undefined,
+    clientContext: undefined,
+    getRemainingTimeInMillis: function() {
+      return headers.get('lambda-runtime-deadline-ms') - Date.now();
+    }
+  }
   let res;
   try {
-    const body = await $HANDLER_NAME(await next.json());
+    const event = await next.json();
+    const body = await $HANDLER_NAME(event, context);
     res = await fetch(INVOCATION + reqId + '/response', {
       method: 'POST',
       body: JSON.stringify(body)
@@ -65,15 +81,19 @@ while (true) {
     console.error(e);
     // If it's an Error we can pull these out cleanly...
     // BUT it's javascript so it could be anything!
-    let { name, message } = e;
-    if (name === undefined) {
-      name = 'Error';
+    let name, message;
+    try {
+      name = e.name || 'Error'
+    } catch (_) {
+      name = 'Error'
+    }
+    try {
+      message = e.message || e
+    } catch (_) {
+      message = e
     }
     if (typeof(name) !== 'string') {
       name = JSON.stringify(name)
-    }
-    if (message === undefined) {
-      message = e;
     }
     if (typeof(message) !== 'string') {
       message = JSON.stringify(message)
@@ -95,8 +115,8 @@ while (true) {
 # See README.md.
 
 mkdir -p /tmp/deno_dir/gen/file$LAMBDA_TASK_ROOT \
- && cp -R $LAMBDA_TASK_ROOT/.deno_dir/LAMBDA_TASK_ROOT/ /tmp/deno_dir/gen/file$LAMBDA_TASK_ROOT \
+ && cp -R $LAMBDA_TASK_ROOT/.deno_dir/LAMBDA_TASK_ROOT/ /tmp/deno_dir/gen/file$LAMBDA_TASK_ROOT &> /dev/null \
  || echo "warn: Unable to import DENO_DIR from .deno_dir"
 
-DENO_DIR=/tmp/deno_dir NO_COLOR=true $SCRIPT_DIR/amz-deno run --allow-net --allow-read /tmp/runtime.js \
+DENO_DIR=/tmp/deno_dir NO_COLOR=true $SCRIPT_DIR/amz-deno run --allow-net --allow-read --allow-env /tmp/runtime.js \
  || investigate

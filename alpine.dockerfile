@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-glibc:alpine-3.9
+FROM frolvlad/alpine-glibc:alpine-3.10_glibc-2.29
 
 ENV DENO_VERSION=0.22.0
 
@@ -10,9 +10,9 @@ RUN apk add --no-cache curl \
  && mv deno /bin/deno \
  && apk del curl
 
-RUN addgroup -g 1993 -S deno
- && adduser -u 1993 -S deno -G deno
- && mkdir /deno-dir/
+RUN addgroup -g 1993 -S deno \
+ && adduser -u 1993 -S deno -G deno \
+ && mkdir /deno-dir/ \
  && chown deno:deno /deno-dir/
 
 ENV DENO_DIR /deno-dir/

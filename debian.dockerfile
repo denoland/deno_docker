@@ -1,4 +1,4 @@
-FROM debian:stable-20190610-slim
+FROM debian:stable-20191014-slim
 
 ENV DENO_VERSION=0.22.0
 ENV DEBIAN_FRONTEND=noninteractive
