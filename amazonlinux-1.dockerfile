@@ -39,6 +39,7 @@ RUN curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSIO
  && rm deno.tar.gz
 
 RUN cp /bin/gn /deno/core/libdeno/buildtools/linux64/gn
+RUN rm /deno/third_party/prebuilt/linux64/sccache
 
 RUN yum install -y gcc-c++ libatomic
 RUN echo "INPUT ( /usr/lib64/libatomic.so.1.2.0 )" \

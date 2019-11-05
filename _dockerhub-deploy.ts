@@ -1,7 +1,7 @@
 const DENO_VERSION = '0.23.0';
 
 console.log("Building and pushing", DENO_VERSION);
-for (const name of ["alpine", "debian", "ubuntu"]) {
+for (const name of ["alpine", "debian", "ubuntu", "amazonlinux-1"]) {
   const p1 = Deno.run({
     args: [
       "docker",

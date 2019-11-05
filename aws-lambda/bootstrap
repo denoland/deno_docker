@@ -7,6 +7,13 @@ HANDLER_FILE=$(echo "$_HANDLER" | cut -d. -f1)
 
 API_ROOT=http://${AWS_LAMBDA_RUNTIME_API}/2018-06-01/runtime/
 
+# If this ENV variable is set then copy that directory as DENO_DIR (default = .deno_dir).
+# Note: For permissions reasons we need the actual DENO_DIR to be somewhere in /tmp.
+DENO_DIR=${DENO_DIR-'.deno_dir'}
+
+# TODO support bundle/js etc.
+HANDLER_FILE=${HANDLER_FILE}.ts
+
 # If we fail prior to the handler loop we post an init error.
 function error {
   echo "error:" $1
@@ -30,25 +37,25 @@ function investigate {
   $SCRIPT_DIR/amz-deno eval 'Deno.version.deno' \
    || error "bad amz-deno executable"
 
-  [ -f $LAMBDA_TASK_ROOT/$HANDLER_FILE.ts ] \
-   || error "missing expected handler file '$HANDLER_FILE.ts'"
+  [ -f $LAMBDA_TASK_ROOT/$HANDLER_FILE ] \
+   || error "missing expected handler file '$HANDLER_FILE'"
 
-  DENO_DIR=/tmp/deno_dir NO_COLOR=true $SCRIPT_DIR/amz-deno fetch $LAMBDA_TASK_ROOT/$HANDLER_FILE.ts \
-   || error "unable to compile $HANDLER_FILE.ts"
+  DENO_DIR=/tmp/deno_dir NO_COLOR=true $SCRIPT_DIR/amz-deno fetch $LAMBDA_TASK_ROOT/$HANDLER_FILE \
+   || error "unable to compile $HANDLER_FILE"
 
   echo "
-  import { $HANDLER_NAME } from '$LAMBDA_TASK_ROOT/$HANDLER_FILE.ts';
+  import { $HANDLER_NAME } from '$LAMBDA_TASK_ROOT/$HANDLER_FILE';
   " > /tmp/runtime-test.js
   DENO_DIR=/tmp/deno_dir NO_COLOR=true $SCRIPT_DIR/amz-deno fetch /tmp/runtime-test.js 2> /dev/null \
-   || error "$HANDLER_FILE.ts must export a function named '$HANDLER_NAME'"
+   || error "$HANDLER_FILE must export a function named '$HANDLER_NAME'"
 
   # perhaps a bug in bootstrap?
 }
 
 # Note: This is a js file to avoid a runtime compilation step.
-# Hopefully $HANDLER_FILE.ts's compilation is cached in DENO_DIR.
+# Hopefully $HANDLER_FILE's compilation is cached in DENO_DIR.
 echo "
-import { $HANDLER_NAME } from '$LAMBDA_TASK_ROOT/$HANDLER_FILE.ts';
+import { $HANDLER_NAME } from '$LAMBDA_TASK_ROOT/$HANDLER_FILE';
 const INVOCATION = '${API_ROOT}invocation/';
 while (true) {
   const next = await fetch(INVOCATION + 'next');
@@ -110,10 +117,6 @@ while (true) {
   await res.blob();
 }
 " > /tmp/runtime.js
-
-# If this ENV variable is set then copy that directory as DENO_DIR (default = .deno_dir).
-# Note: For permissions reasons we need the actual DENO_DIR to be somewhere in /tmp.
-DENO_DIR=${DENO_DIR-'.deno_dir'}
 
 # We copy DENO_DIR into a writable directory (/tmp/deno_dir)
 # and expand DENO_DIR/LAMBDA_TASK_ROOT to match the new location ($LAMBDA_TASK_ROOT).
