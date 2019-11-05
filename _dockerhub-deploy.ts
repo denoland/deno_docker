@@ -1,4 +1,4 @@
-const DENO_VERSION = '0.22.0';
+const DENO_VERSION = '0.23.0';
 
 console.log("Building and pushing", DENO_VERSION);
 for (const name of ["alpine", "debian", "ubuntu"]) {

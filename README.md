@@ -12,7 +12,7 @@ _This also includes an example of using deno on AWS Lambda in the /aws-lambda di
 For example:
 
 ```Dockerfile
-FROM hayd/deno:alpine-0.22.0
+FROM hayd/deno:alpine-0.23.0
 
 EXPOSE 1993
 
