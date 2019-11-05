@@ -11,7 +11,6 @@ API_ROOT=http://${AWS_LAMBDA_RUNTIME_API}/2018-06-01/runtime/
 function error {
   echo "error:" $1
   ERROR="{\"errorMessage\" : \"$1\", \"errorType\" : \"InitException\"}"
-  # FIXME show a more descriptive message (not output {"status":"OK"})
   curl -s -X POST "${API_ROOT}init/error" \
        -d "$ERROR" \
        --header "Lambda-Runtime-Function-Error-Type: Unhandled" \
@@ -66,7 +65,7 @@ while (true) {
     identity: undefined,
     clientContext: undefined,
     getRemainingTimeInMillis: function() {
-      return headers.get('lambda-runtime-deadline-ms') - Date.now();
+      return Number(headers.get('lambda-runtime-deadline-ms')) - Date.now();
     }
   }
   let res;
@@ -81,6 +80,7 @@ while (true) {
     console.error(e);
     // If it's an Error we can pull these out cleanly...
     // BUT it's javascript so it could be anything!
+    // If there's a better way, very happy to take suggestions.
     let name, message;
     try {
       name = e.name || 'Error'
@@ -96,7 +96,8 @@ while (true) {
       name = JSON.stringify(name)
     }
     if (typeof(message) !== 'string') {
-      message = JSON.stringify(message)
+      const s = JSON.stringify(message)
+      message = s === undefined ? '' + message : s
     }
     res = await fetch(INVOCATION + reqId + '/error', {
       method: 'POST',
@@ -110,13 +111,16 @@ while (true) {
 }
 " > /tmp/runtime.js
 
-# This assumes that .deno_dir was included in the zip.
-# The idea is to workaround full, rather than relative, file paths.
-# See README.md.
+# If this ENV variable is set then copy that directory as DENO_DIR (default = .deno_dir).
+# Note: For permissions reasons we need the actual DENO_DIR to be somewhere in /tmp.
+DENO_DIR=${DENO_DIR-'.deno_dir'}
 
+# We copy DENO_DIR into a writable directory (/tmp/deno_dir)
+# and expand DENO_DIR/LAMBDA_TASK_ROOT to match the new location ($LAMBDA_TASK_ROOT).
 mkdir -p /tmp/deno_dir/gen/file$LAMBDA_TASK_ROOT \
- && cp -R $LAMBDA_TASK_ROOT/.deno_dir/LAMBDA_TASK_ROOT/ /tmp/deno_dir/gen/file$LAMBDA_TASK_ROOT &> /dev/null \
- || echo "warn: Unable to import DENO_DIR from .deno_dir"
+ && cp -R $LAMBDA_TASK_ROOT/$DENO_DIR/gen /tmp/deno_dir/gen &> /dev/null \
+ && cp -R $LAMBDA_TASK_ROOT/$DENO_DIR/LAMBDA_TASK_ROOT/ /tmp/deno_dir/gen/file$LAMBDA_TASK_ROOT &> /dev/null \
+ || echo "warn: unable to import '$DENO_DIR/' as DENO_DIR"
 
 DENO_DIR=/tmp/deno_dir NO_COLOR=true $SCRIPT_DIR/amz-deno run --allow-net --allow-read --allow-env /tmp/runtime.js \
  || investigate
