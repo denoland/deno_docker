@@ -7,9 +7,8 @@ jobs:
   build:
     strategy:
       matrix:
-        kind: ['alpine', 'debian', 'ubuntu', 'amazonlinux-1']
+        kind: ['alpine', 'debian', 'ubuntu', 'amazonlinux1']
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Get the version
@@ -18,7 +17,7 @@ jobs:
     - name: Publish Docker
       uses: elgohr/Publish-Docker-Github-Action@2.7
       with:
-        name: "hayd/test:${{ matrix.kind }}-${{ steps.get_version.outputs.VERSION }}"
+        name: "hayd/deno:${{ matrix.kind }}-${{ steps.get_version.outputs.VERSION }}"
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ${{ matrix.kind }}.dockerfile
