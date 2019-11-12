@@ -1,11 +1,15 @@
-# deno_docker
+# Deno Docker
 
 Docker files for [deno](https://github.com/denoland/deno).
 
 These are published on Dockerhub at [hayd/deno](https://hub.docker.com/r/hayd/deno).
 
 
-_This also includes an example of using deno on AWS Lambda in the /aws-lambda directory._
+https://github.com/hayd/deno_docker/workflows/Test/badge.svg
+
+![ci status](https://github.com/hayd/deno_docker/workflows/Test/badge.svg?branch=master)
+
+_The binary produced for Amazon Linux 1 can be used to run [deno on AWS Lambda](https://github.com/hayd/deno_lambda/)._
 
 ---
 
