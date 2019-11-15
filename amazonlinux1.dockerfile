@@ -26,12 +26,12 @@ RUN curl -fL http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-x86_64-linux-sles11
  && mv /tmp/clang+llvm-9.0.0-x86_64-linux-sles11.3 /tmp/clang-llvm
 ENV PATH=/tmp/clang-llvm/bin:$PATH
 
-ENV RUST_VERSION=1.38.0
+ENV RUST_VERSION=1.39.0
 RUN curl https://sh.rustup.rs -sSf \
   | sh -s -- --default-toolchain ${RUST_VERSION} -y
 ENV PATH=/root/.cargo/bin:$PATH
 
-ENV DENO_VERSION=0.23.0
+ENV DENO_VERSION=0.24.0
 
 RUN curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno_src.tar.gz \
          --output deno.tar.gz \
@@ -39,7 +39,6 @@ RUN curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSIO
  && rm deno.tar.gz
 
 RUN cp /bin/gn /deno/core/libdeno/buildtools/linux64/gn
-RUN rm /deno/third_party/prebuilt/linux64/sccache
 
 RUN yum install -y gcc-c++ libatomic
 RUN echo "INPUT ( /usr/lib64/libatomic.so.1.2.0 )" \

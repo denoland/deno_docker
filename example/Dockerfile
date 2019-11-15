@@ -1,4 +1,4 @@
-FROM hayd/deno:alpine-0.23.0
+FROM hayd/deno:alpine-0.24.0
 
 EXPOSE 1993
 
