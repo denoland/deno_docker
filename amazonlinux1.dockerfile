@@ -26,7 +26,7 @@ RUN curl -fL http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-x86_64-linux-sles11
  && mv /tmp/clang+llvm-9.0.0-x86_64-linux-sles11.3 /tmp/clang-llvm
 ENV PATH=/tmp/clang-llvm/bin:$PATH
 
-ENV RUST_VERSION=1.38.0
+ENV RUST_VERSION=1.39.0
 RUN curl https://sh.rustup.rs -sSf \
   | sh -s -- --default-toolchain ${RUST_VERSION} -y
 ENV PATH=/root/.cargo/bin:$PATH
