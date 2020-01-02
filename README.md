@@ -13,7 +13,7 @@ _The binary produced for Amazon Linux 1 can be used to run [deno on AWS Lambda](
 For example:
 
 ```Dockerfile
-FROM hayd/deno:alpine-0.27.0
+FROM hayd/deno:alpine-0.28.0
 
 EXPOSE 1993
 
