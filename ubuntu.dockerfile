@@ -1,6 +1,6 @@
 FROM phusion/baseimage:0.11
 
-ENV DENO_VERSION=0.28.0
+ENV DENO_VERSION=0.28.1
 
 RUN apt-get -qq update \
  && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
