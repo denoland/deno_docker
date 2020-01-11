@@ -11,4 +11,4 @@ jobs:
     - name: Build Docker Image
       run: |
         docker build -f ${{ matrix.kind }}.dockerfile -t ${{ matrix.kind }} .
-        docker run -t ${{ matrix.kind }} .
+        docker run -t ${{ matrix.kind }}
