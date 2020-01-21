@@ -23,7 +23,7 @@ RUN curl -fL http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-x86_64-linux-sles11
          --output /tmp/clang.tar.xz \
  && tar xf /tmp/clang.tar.xz -C /tmp \
  && rm /tmp/clang.tar.xz \
- && mv /tmp/clang+llvm-9.0.0-x86_64-linux-sles11.3 /tmp/clang-llvm
+ && mv /tmp/clang+llvm-9.0.0-x86_64-linux-sles11.3 /tmp/clang
 ENV PATH=/tmp/clang-llvm/bin:$PATH
 
 ENV RUST_VERSION=1.40.0
@@ -43,12 +43,19 @@ RUN echo "INPUT ( /usr/lib64/libatomic.so.1.2.0 )" \
   > "/usr/lib/gcc/x86_64-amazon-linux/4.8.5/libatomic.so"
 
 ENV DENO_BUILD_MODE=release
-ENV CLANG_BASE_PATH=/tmp/clang-llvm
+ENV CLANG_BASE_PATH=/tmp/clang
 ENV GN=/bin/gn
 ENV NINJA=/bin/ninja
+ENV RUST_BACKTRACE=full
+ENV GN_ARGS='clang_use_chrome_plugins=false treat_warnings_as_errors=false use_sysroot=false clang_base_path="/tmp/clang" use_glib=false use_gold=true'
 
 WORKDIR /deno/cli
-RUN RUST_BACKTRACE=full GN_ARGS='clang_use_chrome_plugins=false treat_warnings_as_errors=false use_sysroot=false clang_base_path="/tmp/clang-llvm" use_glib=false use_gold=true' cargo install --locked --root .. --path .
+
+# This is a hack:
+# see https://github.com/denoland/rusty_v8/issues/226
+RUN sed -i 's@rusty_v8 = "0.1.0"@rusty_v8 = { git = "https://github.com/hayd/rusty_v8", branch = "gno-inline-line-tables" }@g' ../core/Cargo.toml
+
+RUN cargo install --locked --root .. --path .
 
 # Confirm the binary works on a fresh image.
 FROM amazonlinux:2017.03.1.20170812
