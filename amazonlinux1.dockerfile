@@ -53,7 +53,7 @@ WORKDIR /deno/cli
 
 # This is a hack:
 # see https://github.com/denoland/rusty_v8/issues/226
-RUN sed -i 's@rusty_v8 = "0.1.0"@rusty_v8 = { git = "https://github.com/hayd/rusty_v8", branch = "gno-inline-line-tables" }@g' ../core/Cargo.toml
+RUN sed -i 's@rusty_v8 = "0.2.0"@rusty_v8 = { git = "https://github.com/hayd/rusty_v8", branch = "gno-inline-line-tables2" }@g' ../core/Cargo.toml
 
 RUN cargo install --locked --root .. --path .
 
