@@ -26,12 +26,12 @@ RUN curl -fL http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-x86_64-linux-sles11
  && mv /tmp/clang+llvm-9.0.0-x86_64-linux-sles11.3 /tmp/clang
 ENV PATH=/tmp/clang-llvm/bin:$PATH
 
-ENV RUST_VERSION=1.40.0
+ENV RUST_VERSION=1.41.0
 RUN curl https://sh.rustup.rs -sSf \
   | sh -s -- --default-toolchain ${RUST_VERSION} -y
 ENV PATH=/root/.cargo/bin:$PATH
 
-ENV DENO_VERSION=0.31.0
+ENV DENO_VERSION=0.32.0
 
 RUN curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno_src.tar.gz \
          --output deno.tar.gz \
@@ -47,14 +47,9 @@ ENV CLANG_BASE_PATH=/tmp/clang
 ENV GN=/bin/gn
 ENV NINJA=/bin/ninja
 ENV RUST_BACKTRACE=full
-ENV GN_ARGS='clang_use_chrome_plugins=false treat_warnings_as_errors=false use_sysroot=false clang_base_path="/tmp/clang" use_glib=false use_gold=true'
+ENV GN_ARGS='clang_use_chrome_plugins=false treat_warnings_as_errors=false use_sysroot=false clang_base_path="/tmp/clang" use_glib=false use_gold=true no_inline_line_tables=false'
 
 WORKDIR /deno/cli
-
-# This is a hack:
-# see https://github.com/denoland/rusty_v8/issues/226
-RUN sed -i 's@rusty_v8 = "0.2.0"@rusty_v8 = { git = "https://github.com/hayd/rusty_v8", branch = "gno-inline-line-tables2" }@g' ../core/Cargo.toml
-
 RUN cargo install --locked --root .. --path .
 
 # Confirm the binary works on a fresh image.
