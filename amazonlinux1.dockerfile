@@ -11,7 +11,9 @@ RUN curl -fsSL https://github.com/ninja-build/ninja/releases/download/v${NINJA_V
  && rm ninja.zip
 
 # FIXME specify a version of gn here rather than "latest"
-ENV GN_VERSION=latest
+# actually this is a instance_id? see:
+# https://chrome-infra-packages.appspot.com/p/gn/gn/linux-amd64/+/
+ENV GN_VERSION=p5bsB7KHKpHTRMZFMTcIddhGcBcYZiH8m4g4Q_T9MOkC
 RUN curl -fL https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/${GN_VERSION} \
          --output gn.zip \
  && unzip gn.zip gn \
@@ -31,7 +33,7 @@ RUN curl https://sh.rustup.rs -sSf \
   | sh -s -- --default-toolchain ${RUST_VERSION} -y
 ENV PATH=/root/.cargo/bin:$PATH
 
-ENV DENO_VERSION=0.32.0
+ENV DENO_VERSION=0.33.0
 
 RUN curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno_src.tar.gz \
          --output deno.tar.gz \
@@ -47,7 +49,15 @@ ENV CLANG_BASE_PATH=/tmp/clang
 ENV GN=/bin/gn
 ENV NINJA=/bin/ninja
 ENV RUST_BACKTRACE=full
-ENV GN_ARGS='clang_use_chrome_plugins=false treat_warnings_as_errors=false use_sysroot=false clang_base_path="/tmp/clang" use_glib=false use_gold=true no_inline_line_tables=false'
+ENV GN_ARGS=' \
+  clang_use_chrome_plugins=false \
+  treat_warnings_as_errors=false \
+  use_sysroot=false \
+  clang_base_path="/tmp/clang" \
+  use_glib=false \
+  use_gold=true \
+  no_inline_line_tables=false \
+'
 
 WORKDIR /deno/cli
 RUN cargo install --locked --root .. --path .
