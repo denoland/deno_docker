@@ -11,7 +11,9 @@ RUN curl -fsSL https://github.com/ninja-build/ninja/releases/download/v${NINJA_V
  && rm ninja.zip
 
 # FIXME specify a version of gn here rather than "latest"
-ENV GN_VERSION=latest
+# actually this is a instance_id? see:
+# https://chrome-infra-packages.appspot.com/p/gn/gn/linux-amd64/+/
+ENV GN_VERSION=p5bsB7KHKpHTRMZFMTcIddhGcBcYZiH8m4g4Q_T9MOkC
 RUN curl -fL https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/${GN_VERSION} \
          --output gn.zip \
  && unzip gn.zip gn \
