@@ -47,14 +47,14 @@ ENV CLANG_BASE_PATH=/tmp/clang
 ENV GN=/bin/gn
 ENV NINJA=/bin/ninja
 ENV RUST_BACKTRACE=full
-ENV GN_ARGS='
-  clang_use_chrome_plugins=false
-  treat_warnings_as_errors=false
-  use_sysroot=false
-  clang_base_path="/tmp/clang"
-  use_glib=false
-  use_gold=true
-  no_inline_line_tables=false
+ENV GN_ARGS=' \
+  clang_use_chrome_plugins=false \
+  treat_warnings_as_errors=false \
+  use_sysroot=false \
+  clang_base_path="/tmp/clang" \
+  use_glib=false \
+  use_gold=true \
+  no_inline_line_tables=false \
 '
 
 WORKDIR /deno/cli
