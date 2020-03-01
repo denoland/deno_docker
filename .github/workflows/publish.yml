@@ -17,7 +17,7 @@ jobs:
     - name: Publish Docker
       uses: elgohr/Publish-Docker-Github-Action@2.7
       with:
-        name: "hayd/deno:${{ matrix.kind }}-${{ steps.get_version.outputs.VERSION }}"
+        name: "hayd/${{ matrix.kind }}-deno:${{ steps.get_version.outputs.VERSION }}"
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ${{ matrix.kind }}.dockerfile
