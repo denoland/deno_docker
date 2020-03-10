@@ -20,4 +20,5 @@ RUN useradd --uid 1993 --user-group deno \
 ENV DENO_DIR /deno-dir/
 
 
-ENTRYPOINT ["deno", "run", "https://deno.land/std/examples/welcome.ts"]
+ENTRYPOINT ["deno"]
+CMD ["https://deno.land/std/examples/welcome.ts"]
