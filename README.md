@@ -10,26 +10,32 @@ _The binary produced for Amazon Linux 1 can be used to run [deno on AWS Lambda](
 
 ---
 
-For example:
+## Run locally:
+
+To run `main.ts` from your working directory:
 
 ```sh
 $ docker run -it --init -p 1993:1993 -v $PWD:/app hayd/deno:alpine-0.35.0 --allow-net /app/main.ts
 ```
 
-or
+Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
+`-v $PWD:/app` mounts the host working directory to `/app` on the container, and
+`--allow-net /app/main.ts` is passed to deno on the container.
+
+## As a Dockerfile
 
 ```Dockerfile
 FROM hayd/deno:alpine-0.36.0
 
-EXPOSE 1993
+EXPOSE 1993  # The port that your application listens to.
 
 WORKDIR /app
 
 # Prefer not to run as root.
 USER deno
 
-# Cache the dependencies as a layer (this is re-run only when deps.ts is modified).
-# Ideally this will download and compile _all_ external files used in main.ts.
+# Cache the dependencies as a layer (the following two steps are re-run only when deps.ts is modified).
+# Ideally fetch deps.ts will download and compile _all_ external files used in main.ts.
 COPY deps.ts .
 RUN deno fetch deps.ts
 
@@ -38,14 +44,16 @@ ADD . .
 # Compile the main app so that it doesn't need to be compiled each startup/entry.
 RUN deno fetch main.ts
 
-ENTRYPOINT ["deno", "run", "--allow-net", "main.ts"]
+CMD ["--allow-net", "main.ts"]
 ```
 
-and run locally:
+and build and run this locally:
 
 ```sh
 $ docker build -t app . && docker run -it --init -p 1993:1993 app
 ```
+
+---
 
 See example directory.
 
