@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.11
+FROM ubuntu:bionic-20200219
 
 ENV DENO_VERSION=0.36.0
 

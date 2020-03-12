@@ -1,12 +1,15 @@
 # Deno Docker
 
-Docker files for [deno](https://github.com/denoland/deno).
+Docker files for [deno](https://github.com/denoland/deno) published on Dockerhub:
 
-These are published on Dockerhub at [hayd/deno](https://hub.docker.com/r/hayd/deno).
+- Alpine Linux: [hayd/alpine-deno](https://hub.docker.com/r/hayd/alpine-deno/) (\~23Mb)
+- Centos: [hayd/centos-deno](https://hub.docker.com/r/hayd/centos-deno/) (\~87Mb)
+- Debian: [hayd/debian-deno](https://hub.docker.com/r/hayd/debian-deno/) (\~47Mb)
+- Ubuntu: [hayd/ubuntu-deno](https://hub.docker.com/r/hayd/ubuntu-deno/) (\~48Mb)
 
 ![ci status](https://github.com/hayd/deno-docker/workflows/Test/badge.svg?branch=master)
 
-_The binary produced for Amazon Linux 1 can be used to run [deno on AWS Lambda](https://github.com/hayd/deno-lambda/)._
+_The amazonlinux1 build is used to run [deno on AWS Lambda](https://github.com/hayd/deno-lambda/)._
 
 ---
 
@@ -25,7 +28,7 @@ Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
 ## As a Dockerfile
 
 ```Dockerfile
-FROM hayd/deno:alpine-0.36.0
+FROM hayd/alpine-deno:0.36.0
 
 EXPOSE 1993  # The port that your application listens to.
 
