@@ -24,6 +24,7 @@ jobs:
         cache: true
         tag_names: true
     - name: Publish Docker Legacy
+      if: matrix.kind != 'amazonlinux1'
       uses: elgohr/Publish-Docker-Github-Action@2.7
       with:
         name: "hayd/deno:${{ matrix.kind }}-${{ steps.get_version.outputs.VERSION }}"

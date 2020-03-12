@@ -1,10 +1,9 @@
 # Deno Docker
 
-Docker files for [deno](https://github.com/denoland/deno).
-
-These are published on Dockerhub:
+Docker files for [deno](https://github.com/denoland/deno) published on Dockerhub:
 
 - Alpine Linux: [hayd/alpine-deno](https://hub.docker.com/r/hayd/alpine-deno/) (\~23Mb)
+- Centos: [hayd/centos-deno](https://hub.docker.com/r/hayd/centos-deno/) (\~87Mb)
 - Debian: [hayd/debian-deno](https://hub.docker.com/r/hayd/debian-deno/) (\~47Mb)
 - Ubuntu: [hayd/ubuntu-deno](https://hub.docker.com/r/hayd/ubuntu-deno/) (\~48Mb)
 
