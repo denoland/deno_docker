@@ -23,3 +23,12 @@ jobs:
         dockerfile: ${{ matrix.kind }}.dockerfile
         cache: true
         tag_names: true
+    - name: Publish Docker Legacy
+      uses: elgohr/Publish-Docker-Github-Action@2.7
+      with:
+        name: "hayd/deno:${{ matrix.kind }}-${{ steps.get_version.outputs.VERSION }}"
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: ${{ matrix.kind }}.dockerfile
+        cache: true
+        tag_names: true
