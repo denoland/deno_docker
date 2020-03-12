@@ -7,7 +7,7 @@ jobs:
   build:
     strategy:
       matrix:
-        kind: ['alpine', 'debian', 'ubuntu', 'amazonlinux1']
+        kind: ['alpine', 'amazonlinux1', 'centos', 'debian', 'ubuntu']
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1

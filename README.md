@@ -4,9 +4,9 @@ Docker files for [deno](https://github.com/denoland/deno).
 
 These are published on Dockerhub:
 
-- [hayd/alpine-deno](https://hub.docker.com/r/hayd/alpine-deno/) (\~23Mb)
-- [hayd/debian-deno](https://hub.docker.com/r/hayd/debian-deno/) (\~47Mb)
-- [hayd/ubuntu-deno](https://hub.docker.com/r/hayd/ubuntu-deno/) (\~48Mb)
+- Alpine Linux: [hayd/alpine-deno](https://hub.docker.com/r/hayd/alpine-deno/) (\~23Mb)
+- Debian: [hayd/debian-deno](https://hub.docker.com/r/hayd/debian-deno/) (\~47Mb)
+- Ubuntu: [hayd/ubuntu-deno](https://hub.docker.com/r/hayd/ubuntu-deno/) (\~48Mb)
 
 ![ci status](https://github.com/hayd/deno-docker/workflows/Test/badge.svg?branch=master)
 
