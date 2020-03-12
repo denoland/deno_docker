@@ -12,6 +12,12 @@ _The binary produced for Amazon Linux 1 can be used to run [deno on AWS Lambda](
 
 For example:
 
+```sh
+$ docker run -it --init -p 1993:1993 -v $PWD:/app hayd/deno:alpine-0.35.0 --allow-net /app/main.ts
+```
+
+or
+
 ```Dockerfile
 FROM hayd/deno:alpine-0.36.0
 

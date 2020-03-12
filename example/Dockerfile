@@ -12,4 +12,4 @@ RUN deno fetch deps.ts
 ADD . .
 RUN deno fetch main.ts
 
-ENTRYPOINT ["deno", "run", "--allow-net", "main.ts"]
+CMD ["run", "--allow-net", "main.ts"]
