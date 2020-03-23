@@ -34,7 +34,7 @@ jobs:
         cache: true
         tags: ${{ matrix.kind }},${{ matrix.kind }}-${{ steps.get_version.outputs.VERSION }}"
     - name: Publish Docker Legacy Alpine
-      if: matrix.kind = 'alpine'
+      if: matrix.kind == 'alpine'
       uses: elgohr/Publish-Docker-Github-Action@2.7
       with:
         name: "hayd/deno"
