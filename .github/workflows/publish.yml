@@ -17,19 +17,29 @@ jobs:
     - name: Publish Docker
       uses: elgohr/Publish-Docker-Github-Action@2.7
       with:
-        name: "hayd/${{ matrix.kind }}-deno:${{ steps.get_version.outputs.VERSION }}"
+        name: "hayd/${{ matrix.kind }}-deno"
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ${{ matrix.kind }}.dockerfile
         cache: true
-        tag_names: true
+        tags: latest,${{ steps.get_version.outputs.VERSION }}
     - name: Publish Docker Legacy
       if: matrix.kind != 'amazonlinux1'
       uses: elgohr/Publish-Docker-Github-Action@2.7
       with:
-        name: "hayd/deno:${{ matrix.kind }}-${{ steps.get_version.outputs.VERSION }}"
+        name: "hayd/deno"
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ${{ matrix.kind }}.dockerfile
         cache: true
-        tag_names: true
+        tags: ${{ matrix.kind }},${{ matrix.kind }}-${{ steps.get_version.outputs.VERSION }}"
+    - name: Publish Docker Legacy Alpine
+      if: matrix.kind = 'alpine'
+      uses: elgohr/Publish-Docker-Github-Action@2.7
+      with:
+        name: "hayd/deno"
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: ${{ matrix.kind }}.dockerfile
+        cache: true
+        tags: latest,${{ steps.get_version.outputs.VERSION }}
