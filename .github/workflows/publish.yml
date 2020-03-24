@@ -32,7 +32,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ${{ matrix.kind }}.dockerfile
         cache: true
-        tags: ${{ matrix.kind }},${{ matrix.kind }}-${{ steps.get_version.outputs.VERSION }}"
+        tags: ${{ matrix.kind }},${{ matrix.kind }}-${{ steps.get_version.outputs.VERSION }}
     - name: Publish Docker Legacy Alpine
       if: matrix.kind == 'alpine'
       uses: elgohr/Publish-Docker-Github-Action@2.7
