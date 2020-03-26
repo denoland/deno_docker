@@ -21,11 +21,11 @@ RUN curl -fL https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/${
  && rm gn.zip
 
 RUN yum install -y xz
-RUN curl -fL http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-x86_64-linux-sles11.3.tar.xz \
+RUN curl -fL https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-sles11.3.tar.xz \
          --output /tmp/clang.tar.xz \
  && tar xf /tmp/clang.tar.xz -C /tmp \
  && rm /tmp/clang.tar.xz \
- && mv /tmp/clang+llvm-9.0.0-x86_64-linux-sles11.3 /tmp/clang
+ && mv /tmp/clang+llvm-10.0.0-x86_64-linux-sles11.3 /tmp/clang
 ENV PATH=/tmp/clang-llvm/bin:$PATH
 
 ENV RUST_VERSION=1.41.0
@@ -56,7 +56,6 @@ ENV GN_ARGS=' \
   clang_base_path="/tmp/clang" \
   use_glib=false \
   use_gold=true \
-  no_inline_line_tables=false \
 '
 
 WORKDIR /deno/cli
