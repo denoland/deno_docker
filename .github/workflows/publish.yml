@@ -22,7 +22,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ${{ matrix.kind }}.dockerfile
         cache: true
-        tags: latest,${{ steps.get_version.outputs.VERSION }}
+        tags: "latest,${{ steps.get_version.outputs.VERSION }}"
     - name: Publish Docker Legacy
       if: matrix.kind != 'amazonlinux1'
       uses: elgohr/Publish-Docker-Github-Action@2.7
@@ -32,7 +32,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ${{ matrix.kind }}.dockerfile
         cache: true
-        tags: ${{ matrix.kind }},${{ matrix.kind }}-${{ steps.get_version.outputs.VERSION }}
+        tags: "${{ matrix.kind }},${{ matrix.kind }}-${{ steps.get_version.outputs.VERSION }}"
   build_alpine_latest:
     runs-on: ubuntu-latest
     steps:
@@ -48,4 +48,4 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: alpine.dockerfile
         cache: true
-        tags: latest,${{ steps.get_version.outputs.VERSION }}
+        tags: "latest,${{ steps.get_version.outputs.VERSION }}"
