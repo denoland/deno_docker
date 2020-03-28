@@ -18,7 +18,7 @@ _The amazonlinux1 build is used to run [deno on AWS Lambda](https://github.com/h
 To run `main.ts` from your working directory:
 
 ```sh
-$ docker run -it --init -p 1993:1993 -v $PWD:/app hayd/alpine-deno:0.37.0 --allow-net /app/main.ts
+$ docker run -it --init -p 1993:1993 -v $PWD:/app hayd/alpine-deno:0.37.1 --allow-net /app/main.ts
 ```
 
 Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
@@ -28,7 +28,7 @@ Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
 ## As a Dockerfile
 
 ```Dockerfile
-FROM hayd/alpine-deno:0.37.0
+FROM hayd/alpine-deno:0.37.1
 
 EXPOSE 1993  # The port that your application listens to.
 
