@@ -15,7 +15,7 @@ jobs:
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     - name: Publish Docker
-      uses: elgohr/Publish-Docker-Github-Action@2.7
+      uses: elgohr/Publish-Docker-Github-Action@2.14
       with:
         name: "hayd/${{ matrix.kind }}-deno"
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -25,7 +25,7 @@ jobs:
         tags: "latest,${{ steps.get_version.outputs.VERSION }}"
     - name: Publish Docker Legacy
       if: matrix.kind != 'amazonlinux1'
-      uses: elgohr/Publish-Docker-Github-Action@2.7
+      uses: elgohr/Publish-Docker-Github-Action@2.14
       with:
         name: "hayd/deno"
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -41,7 +41,7 @@ jobs:
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     - name: Publish Docker Legacy Alpine
-      uses: elgohr/Publish-Docker-Github-Action@2.7
+      uses: elgohr/Publish-Docker-Github-Action@2.14
       with:
         name: "hayd/deno"
         username: ${{ secrets.DOCKER_USERNAME }}
