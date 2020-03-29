@@ -5,27 +5,27 @@ RUN yum install -y curl unzip
 
 ENV NINJA_VERSION=1.8.2
 RUN curl -fsSL https://github.com/ninja-build/ninja/releases/download/v${NINJA_VERSION}/ninja-linux.zip \
-  --output ninja.zip \
-  && unzip ninja.zip \
-  && mv ninja /bin/ninja \
-  && rm ninja.zip
+         --output ninja.zip \
+ && unzip ninja.zip \
+ && mv ninja /bin/ninja \
+ && rm ninja.zip
 
 # FIXME specify a version of gn here rather than "latest"
 # actually this is a instance_id? see:
 # https://chrome-infra-packages.appspot.com/p/gn/gn/linux-amd64/+/
 ENV GN_VERSION=p5bsB7KHKpHTRMZFMTcIddhGcBcYZiH8m4g4Q_T9MOkC
 RUN curl -fL https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/${GN_VERSION} \
-  --output gn.zip \
-  && unzip gn.zip gn \
-  && mv gn /bin/gn \
-  && rm gn.zip
+         --output gn.zip \
+ && unzip gn.zip gn \
+ && mv gn /bin/gn \
+ && rm gn.zip
 
 RUN yum install -y xz
 RUN curl -fL https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-sles11.3.tar.xz \
-  --output /tmp/clang.tar.xz \
-  && tar xf /tmp/clang.tar.xz -C /tmp \
-  && rm /tmp/clang.tar.xz \
-  && mv /tmp/clang+llvm-10.0.0-x86_64-linux-sles11.3 /tmp/clang
+         --output /tmp/clang.tar.xz \
+ && tar xf /tmp/clang.tar.xz -C /tmp \
+ && rm /tmp/clang.tar.xz \
+ && mv /tmp/clang+llvm-10.0.0-x86_64-linux-sles11.3 /tmp/clang
 ENV PATH=/tmp/clang-llvm/bin:$PATH
 
 ENV RUST_VERSION=1.41.0
@@ -36,9 +36,9 @@ ENV PATH=/root/.cargo/bin:$PATH
 ENV DENO_VERSION=0.38.0
 
 RUN curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno_src.tar.gz \
-  --output deno.tar.gz \
-  && tar -zxf deno.tar.gz \
-  && rm deno.tar.gz
+         --output deno.tar.gz \
+ && tar -zxf deno.tar.gz \
+ && rm deno.tar.gz
 
 RUN yum install -y gcc-c++ libatomic
 RUN echo "INPUT ( /usr/lib64/libatomic.so.1.2.0 )" \
@@ -56,7 +56,7 @@ ENV GN_ARGS=' \
   clang_base_path="/tmp/clang" \
   use_glib=false \
   use_gold=true \
-  '
+'
 
 WORKDIR /deno/cli
 RUN cargo install --locked --root .. --path .
