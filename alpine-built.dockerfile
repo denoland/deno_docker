@@ -15,16 +15,16 @@ RUN apk upgrade --update-cache --available
 
 RUN \
   apk add --update --virtual .gn-build-dependencies \
-    alpine-sdk \
-    binutils-gold \
-    clang \
-    curl \
-    git \
-    llvm \
-    ninja \
-    python \
-    tar \
-    xz \
+  alpine-sdk \
+  binutils-gold \
+  clang \
+  curl \
+  git \
+  llvm \
+  ninja \
+  python \
+  tar \
+  xz \
   # Two quick fixes: we need the LLVM tooling in $PATH, and we
   # also have to use gold instead of ld.
   && PATH=$PATH:/usr/lib/llvm9/bin \
@@ -38,7 +38,7 @@ RUN \
   && cp -f /tmp/gn/out/gn /usr/local/bin/gn \
   # Remove build dependencies and temporary files
   && apk del .gn-build-dependencies \
-&& rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
+  && rm -rf /tmp/* /var/tmp/* /var/cache/apk/*
 
 # STEP 2
 # Build deno binary for alpine.
@@ -46,13 +46,13 @@ RUN \
 FROM alpine:3.10.1 as deno-builder
 
 ENV DENO_BUILD_MODE=release
-ENV DENO_VERSION=0.37.0
+ENV DENO_VERSION=0.38.0
 
 RUN apk add --no-cache curl && \
-    curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno_src.tar.gz --output deno.tar.gz && \
-    tar -zxf deno.tar.gz && \
-    rm deno.tar.gz && \
-    apk del curl
+  curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno_src.tar.gz --output deno.tar.gz && \
+  tar -zxf deno.tar.gz && \
+  rm deno.tar.gz && \
+  apk del curl
 
 # we need a very recent version of rust et al only available in edge repo.
 RUN sed -i -e 's/v[[:digit:]]\..*\//edge\//g' /etc/apk/repositories
@@ -66,10 +66,10 @@ RUN cp /usr/bin/ninja /deno/third_party/depot_tools/ninja-linux64
 
 RUN apk add --no-cache xz
 RUN curl -fL http://releases.llvm.org/9.0.0/clang+llvm-9.0.0-x86_64-linux-sles11.3.tar.xz \
-         --output /tmp/clang.tar.xz \
- && tar xf /tmp/clang.tar.xz -C /tmp \
- && rm /tmp/clang.tar.xz \
- && mv /tmp/clang+llvm-9.0.0-x86_64-linux-sles11.3 /tmp/clang-llvm
+  --output /tmp/clang.tar.xz \
+  && tar xf /tmp/clang.tar.xz -C /tmp \
+  && rm /tmp/clang.tar.xz \
+  && mv /tmp/clang+llvm-9.0.0-x86_64-linux-sles11.3 /tmp/clang-llvm
 ENV PATH=/tmp/clang-llvm/bin:$PATH
 
 WORKDIR deno/cli
