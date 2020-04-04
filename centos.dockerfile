@@ -2,7 +2,8 @@ FROM centos:8.1.1911
 
 ENV DENO_VERSION=0.39.0
 
-RUN curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip \
+RUN yum install unzip \
+ & curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip \
          --output deno.zip \
  && unzip deno.zip \
  && chmod 777 deno \

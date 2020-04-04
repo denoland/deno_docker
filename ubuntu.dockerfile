@@ -4,7 +4,7 @@ ENV DENO_VERSION=0.39.0
 
 RUN apt-get -qq update \
  && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
- && apt-get -qq install -y curl \
+ && apt-get -qq install -y curl unzip \
  && curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip \
          --output deno.zip \
  && unzip deno.zip \

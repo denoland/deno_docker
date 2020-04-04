@@ -4,7 +4,7 @@ ENV DENO_VERSION=0.39.0
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq update \
- && apt-get -qq install -y --no-install-recommends curl ca-certificates \
+ && apt-get -qq install -y --no-install-recommends curl ca-certificates unzip \
  && curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip \
          --output deno.zip \
  && unzip deno.zip \
