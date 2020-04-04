@@ -2,13 +2,13 @@ FROM frolvlad/alpine-glibc:alpine-3.10_glibc-2.29
 
 ENV DENO_VERSION=0.39.0
 
-RUN apk add --no-cache curl \
+RUN apk add --virtual .download --no-cache curl \
  && curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip \
          --output deno.zip \
  && unzip deno.zip \
  && chmod 777 deno \
  && mv deno /bin/deno \
- && apk del curl
+ && apk del .download
 
 RUN addgroup -g 1993 -S deno \
  && adduser -u 1993 -S deno -G deno \

@@ -4,13 +4,14 @@ ENV DENO_VERSION=0.39.0
 
 RUN apt-get -qq update \
  && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
- && apt-get -qq install -y curl unzip \
+ && apt-get -qq install -y ca-certificates curl unzip --no-install-recommends \
  && curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip \
          --output deno.zip \
  && unzip deno.zip \
  && chmod 777 deno \
  && mv deno /usr/bin/deno \
- && apt-get -qq remove -y curl \
+ && apt-get -qq remove -y ca-certificates curl unzip \
+ && apt-get -y -qq autoremove \
  && apt-get -qq clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

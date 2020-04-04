@@ -10,6 +10,8 @@ RUN apt-get -qq update \
  && unzip deno.zip \
  && chmod 777 deno \
  && mv deno /usr/bin/deno \
+ && apt-get -qq remove --purge -y curl ca-certificates unzip \
+ && apt-get -y -qq autoremove \
  && apt-get -qq clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
