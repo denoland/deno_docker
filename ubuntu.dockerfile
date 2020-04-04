@@ -1,4 +1,4 @@
-FROM ubuntu:bionic-20200219
+FROM ubuntu:bionic-20200311
 
 ENV DENO_VERSION=0.39.0
 

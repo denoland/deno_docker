@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-glibc:alpine-3.10_glibc-2.29
+FROM frolvlad/alpine-glibc:alpine-3.11_glibc-2.31
 
 ENV DENO_VERSION=0.39.0
 
