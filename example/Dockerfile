@@ -7,9 +7,9 @@ WORKDIR /app
 USER deno
 
 COPY deps.ts .
-RUN deno fetch deps.ts
+RUN deno cache deps.ts
 
 ADD . .
-RUN deno fetch main.ts
+RUN deno cache main.ts
 
 CMD ["run", "--allow-net", "main.ts"]
