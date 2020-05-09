@@ -69,4 +69,4 @@ ENV DENO_DIR /deno-dir/
 
 
 ENTRYPOINT ["deno"]
-CMD ["https://deno.land/std/examples/welcome.ts"]
+CMD ["run", "https://deno.land/std/examples/welcome.ts"]
