@@ -1,6 +1,6 @@
 FROM ubuntu:bionic-20200311
 
-ENV DENO_VERSION=0.42.0
+ENV DENO_VERSION=1.0.0-rc2
 
 RUN apt-get -qq update \
  && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
@@ -24,4 +24,4 @@ ENV DENO_DIR /deno-dir/
 
 
 ENTRYPOINT ["deno"]
-CMD ["https://deno.land/std/examples/welcome.ts"]
+CMD ["run", "https://deno.land/std/examples/welcome.ts"]
