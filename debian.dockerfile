@@ -1,6 +1,6 @@
 FROM debian:stable-20200327-slim
 
-ENV DENO_VERSION=0.42.0
+ENV DENO_VERSION=1.0.0-rc2
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq update \
@@ -24,4 +24,4 @@ ENV DENO_DIR /deno-dir/
 
 
 ENTRYPOINT ["deno"]
-CMD ["https://deno.land/std/examples/welcome.ts"]
+CMD ["run", "https://deno.land/std/examples/welcome.ts"]
