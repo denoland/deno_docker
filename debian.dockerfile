@@ -1,7 +1,7 @@
 FROM debian:stable-20200327-slim
 
 ENV DENO_VERSION=0.42.0
-ENV DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq update \
  && apt-get -qq install -y --no-install-recommends curl ca-certificates unzip \
