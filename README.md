@@ -36,6 +36,7 @@ deno () {
     --tty \
     --rm \
     --volume $PWD:/app \
+    --volume $HOME/.deno:/deno-dir \
     --workdir /app \
     hayd/alpine-deno:latest \
     "$@"
