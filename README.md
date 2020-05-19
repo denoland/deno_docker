@@ -13,7 +13,7 @@ _The amazonlinux1 build is used to run [deno on AWS Lambda](https://github.com/h
 
 ---
 
-## Run locally:
+## Run locally
 
 To run `main.ts` from your working directory:
 
@@ -24,6 +24,29 @@ $ docker run -it --init -p 1993:1993 -v $PWD:/app hayd/alpine-deno:1.0.0 --allow
 Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
 `-v $PWD:/app` mounts the host working directory to `/app` on the container, and
 `--allow-net /app/main.ts` is passed to deno on the container.
+
+### Add `deno` command
+
+Alternatively, you can add `deno` command to your shell init file (e.g. `.bashrc`):
+
+```sh
+deno () {
+  docker run \
+    --interactive \
+    --tty \
+    --rm \
+    --volume $PWD:/app \
+    --workdir /app \
+    hayd/alpine-deno:latest \
+    "$@"
+}
+```
+
+```sh
+source ~/.bashrc
+deno --version
+deno run ./main.ts
+```
 
 ## As a Dockerfile
 
