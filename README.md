@@ -17,18 +17,18 @@ _The amazonlinux1 build is used to run [deno on AWS Lambda](https://github.com/h
 
 To start the `deno` repl:
 ```sh
-$ docker run -it --init hayd/alpine-deno:1.1.0 repl
+$ docker run -it --init hayd/alpine-deno:1.1.1 repl
 ```
 
 To shell into the docker runtime:
 ```sh
-$ docker run -it --init --entrypoint sh hayd/alpine-deno:1.1.0
+$ docker run -it --init --entrypoint sh hayd/alpine-deno:1.1.1
 ```
 
 To run `main.ts` from your working directory:
 
 ```sh
-$ docker run -it --init -p 1993:1993 -v $PWD:/app hayd/alpine-deno:1.1.0 --allow-net /app/main.ts
+$ docker run -it --init -p 1993:1993 -v $PWD:/app hayd/alpine-deno:1.1.1 --allow-net /app/main.ts
 ```
 
 Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
@@ -39,7 +39,7 @@ Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
 ## As a Dockerfile
 
 ```Dockerfile
-FROM hayd/alpine-deno:1.1.0
+FROM hayd/alpine-deno:1.1.1
 
 EXPOSE 1993  # The port that your application listens to.
 
@@ -80,7 +80,7 @@ deno () {
     --volume $PWD:/app \
     --volume $HOME/.deno:/deno-dir \
     --workdir /app \
-    hayd/alpine-deno:1.1.0 \
+    hayd/alpine-deno:1.1.1 \
     "$@"
 }
 ```
