@@ -33,7 +33,7 @@ RUN curl https://sh.rustup.rs -sSf \
   | sh -s -- --default-toolchain ${RUST_VERSION} -y
 ENV PATH=/root/.cargo/bin:$PATH
 
-ENV DENO_VERSION=1.1.1
+ENV DENO_VERSION=1.1.3
 
 RUN curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno_src.tar.gz \
          --output deno.tar.gz \
