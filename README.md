@@ -42,7 +42,8 @@ Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
 ```Dockerfile
 FROM hayd/alpine-deno:1.2.1
 
-EXPOSE 1993  # The port that your application listens to.
+# The port that your application listens to.
+EXPOSE 1993
 
 WORKDIR /app
 
