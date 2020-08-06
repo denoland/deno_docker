@@ -30,7 +30,7 @@ $ docker run -it --init --entrypoint sh hayd/alpine-deno:1.2.2
 To run `main.ts` from your working directory:
 
 ```sh
-$ docker run -it --init -p 1993:1993 -v $PWD:/app hayd/alpine-deno:1.2.2 --allow-net /app/main.ts
+$ docker run -it --init -p 1993:1993 -v $PWD:/app hayd/alpine-deno:1.2.2 run --allow-net /app/main.ts
 ```
 
 Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
