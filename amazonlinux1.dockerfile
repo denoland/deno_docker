@@ -66,7 +66,11 @@ FROM amazonlinux:2017.03.1.20170812
 
 COPY --from=0 /deno/target/release/deno /bin/deno
 ENV DENO_DIR /deno-dir/
+ENV DENO_INSTALL_ROOT /usr/local
+
+COPY ./_entry.sh /.docker-entry.sh
+RUN chmod 777 /.docker-entry.sh
 
 
-ENTRYPOINT ["deno"]
+ENTRYPOINT ["/.docker-entry.sh"]
 CMD ["run", "https://deno.land/std/examples/welcome.ts"]
