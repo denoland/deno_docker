@@ -17,7 +17,10 @@ RUN addgroup -g 1993 -S deno \
         && chown deno:deno /deno-dir/
 
 ENV DENO_DIR /deno-dir/
+ENV DENO_INSTALL_ROOT /usr/local
 
+COPY ./_entry.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod 777 /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT ["deno"]
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["run", "https://deno.land/std/examples/welcome.ts"]
