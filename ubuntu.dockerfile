@@ -1,6 +1,6 @@
 FROM ubuntu:bionic-20200311
 
-ENV DENO_VERSION=1.4.1
+ENV DENO_VERSION=1.4.2
 
 RUN apt-get -qq update \
         && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
