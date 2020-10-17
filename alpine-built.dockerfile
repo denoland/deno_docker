@@ -46,7 +46,7 @@ RUN \
 FROM alpine:3.10.1 as deno-builder
 
 ENV DENO_BUILD_MODE=release
-ENV DENO_VERSION=1.4.4
+ENV DENO_VERSION=1.4.6
 
 RUN apk add --no-cache curl && \
   curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno_src.tar.gz --output deno.tar.gz && \
