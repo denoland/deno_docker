@@ -25,4 +25,5 @@ jobs:
         docker build -f base.dockerfile -t hayd/deno-lambda .
         docker build -f example.dockerfile -t example .
         docker run -p=9000:8080 example &
+        sleep 5
         curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"payload":"hello world!"}'
