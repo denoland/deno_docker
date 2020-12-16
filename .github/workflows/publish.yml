@@ -7,7 +7,7 @@ jobs:
   build:
     strategy:
       matrix:
-        kind: ['alpine', 'amazonlinux1', 'centos', 'debian', 'ubuntu']
+        kind: ['alpine', 'centos', 'debian', 'ubuntu']
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -24,7 +24,6 @@ jobs:
         cache: true
         tags: "latest,${{ steps.get_version.outputs.VERSION }}"
     - name: Publish Docker Legacy
-      if: matrix.kind != 'amazonlinux1'
       uses: elgohr/Publish-Docker-Github-Action@2.14
       with:
         name: "hayd/deno"
