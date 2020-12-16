@@ -9,7 +9,8 @@ Docker files for [deno](https://github.com/denoland/deno) published on Dockerhub
 
 ![ci status](https://github.com/hayd/deno-docker/workflows/Test/badge.svg?branch=master)
 
-_The amazonlinux1 build is used to run [deno on AWS Lambda](https://github.com/hayd/deno-lambda/)._
+_To run [deno containers on AWS Lambda](https://hub.docker.com/r/hayd/deno-lambda/), see lambda/,
+and the [deno-lambda](https://github.com/hayd/deno-lambda) project._
 
 ---
 
