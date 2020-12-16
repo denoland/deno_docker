@@ -15,3 +15,15 @@ jobs:
         docker run -t ${{ matrix.kind }} run https://deno.land/std/examples/welcome.ts
         docker run -t ${{ matrix.kind }} deno run https://deno.land/std/examples/welcome.ts
         docker run -t ${{ matrix.kind }} echo 'test entry script'
+  lambda:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build Docker Image
+      run: |
+        cd lambda
+        docker build -f base.dockerfile -t hayd/deno-lambda .
+        docker build -f example.dockerfile -t example .
+        docker run -p=9000:8080 example &
+        sleep 5
+        curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"payload":"hello world!"}'
