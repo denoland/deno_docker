@@ -62,6 +62,6 @@ jobs:
         name: "hayd/deno-lambda"
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        dockerfile: lambda.dockerfile
+        dockerfile: lambda/base.dockerfile
         cache: true
         tags: "latest,${{ steps.get_version.outputs.VERSION }}"
