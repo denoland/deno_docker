@@ -7,7 +7,7 @@ RUN apk add --virtual .download --no-cache curl \
          --output deno.zip \
  && unzip deno.zip \
  && rm deno.zip \
- && chmod 777 deno \
+ && chmod 755 deno \
  && mv deno /bin/deno \
  && apk del .download
 
@@ -20,7 +20,7 @@ ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
 
 COPY ./_entry.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod 777 /usr/local/bin/docker-entrypoint.sh
+RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 
 
 ENTRYPOINT ["docker-entrypoint.sh"]

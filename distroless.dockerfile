@@ -7,7 +7,7 @@ RUN apk add --virtual .download --no-cache curl \
          --output deno.zip \
  && unzip deno.zip \
  && rm deno.zip \
- && chmod 777 deno \
+ && chmod 755 deno \
  && mv deno /bin/deno \
  && apk del .download
 
