@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-glibc
+FROM alpine:3.12.3
 
 ENV DENO_VERSION=1.6.1
 
@@ -11,17 +11,15 @@ RUN apk add --virtual .download --no-cache curl \
  && mv deno /bin/deno \
  && apk del .download
 
-RUN addgroup -g 1993 -S deno \
- && adduser -u 1993 -S deno -G deno \
- && mkdir /deno-dir/ \
- && chown deno:deno /deno-dir/
 
+FROM gcr.io/distroless/cc
+COPY --from=0 /bin/deno /bin/deno
+
+ENV DENO_VERSION=1.6.1
 ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
 
-COPY ./_entry.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod 777 /usr/local/bin/docker-entrypoint.sh
 
-
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/deno"]
 CMD ["run", "https://deno.land/std/examples/welcome.ts"]
+
