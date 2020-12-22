@@ -1,6 +1,6 @@
 FROM debian:stable-slim
 
-ENV DENO_VERSION=1.6.1
+ENV DENO_VERSION=1.6.2
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq update \
@@ -9,7 +9,7 @@ RUN apt-get -qq update \
          --output deno.zip \
  && unzip deno.zip \
  && rm deno.zip \
- && chmod 777 deno \
+ && chmod 755 deno \
  && mv deno /usr/bin/deno \
  && apt-get -qq remove --purge -y curl ca-certificates unzip \
  && apt-get -y -qq autoremove \
@@ -24,7 +24,7 @@ ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
 
 COPY ./_entry.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod 777 /usr/local/bin/docker-entrypoint.sh
+RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 
 
 ENTRYPOINT ["docker-entrypoint.sh"]
