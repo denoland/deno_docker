@@ -5,6 +5,7 @@ Docker files for [deno](https://github.com/denoland/deno) published on Dockerhub
 - Alpine Linux: [hayd/alpine-deno](https://hub.docker.com/r/hayd/alpine-deno/) (\~28Mb)
 - Centos: [hayd/centos-deno](https://hub.docker.com/r/hayd/centos-deno/) (\~94Mb)
 - Debian: [hayd/debian-deno](https://hub.docker.com/r/hayd/debian-deno/) (\~47Mb)
+- Distroless: [hayd/distroless-deno](https://hub.docker.com/r/hayd/distroless-deno) (\~28Mb)
 - Ubuntu: [hayd/ubuntu-deno](https://hub.docker.com/r/hayd/ubuntu-deno/) (\~50Mb)
 
 ![ci status](https://github.com/hayd/deno-docker/workflows/Test/badge.svg?branch=master)
@@ -48,9 +49,6 @@ EXPOSE 1993
 
 WORKDIR /app
 
-# Prefer not to run as root.
-USER deno
-
 # Cache the dependencies as a layer (the following two steps are re-run only when deps.ts is modified).
 # Ideally cache deps.ts will download and compile _all_ external files used in main.ts.
 COPY deps.ts .
@@ -60,6 +58,9 @@ RUN deno cache deps.ts
 ADD . .
 # Compile the main app so that it doesn't need to be compiled each startup/entry.
 RUN deno cache main.ts
+
+# Prefer not to run as root.
+USER deno
 
 CMD ["run", "--allow-net", "main.ts"]
 ```
