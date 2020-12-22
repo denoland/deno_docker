@@ -48,19 +48,3 @@ jobs:
         dockerfile: alpine.dockerfile
         cache: true
         tags: "latest,${{ steps.get_version.outputs.VERSION }}"
-  build_deno_lambda:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Get the version
-      id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-    - name: Publish Deno Lambda
-      uses: elgohr/Publish-Docker-Github-Action@3.02
-      with:
-        name: "hayd/deno-lambda"
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        dockerfile: lambda/base.dockerfile
-        cache: true
-        tags: "latest,${{ steps.get_version.outputs.VERSION }}"
