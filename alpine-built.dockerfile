@@ -6,7 +6,7 @@
 FROM alpine as deno-builder
 
 ENV DENO_BUILD_MODE=release
-ENV DENO_VERSION=1.7.2
+ENV DENO_VERSION=1.8.0
 
 RUN apk add --no-cache curl && \
   curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno_src.tar.gz --output deno.tar.gz && \
