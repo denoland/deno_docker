@@ -1,6 +1,6 @@
 FROM frolvlad/alpine-glibc
 
-ENV DENO_VERSION=1.7.2
+ENV DENO_VERSION=1.8.0
 
 RUN apk add --virtual .download --no-cache curl \
  && curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip \
@@ -22,6 +22,9 @@ ENV DENO_INSTALL_ROOT /usr/local
 COPY ./_entry.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 
+# REMOVE ASAP (this is due to dynamic link in deno 1.8.0)
+# https://github.com/denoland/deno/issues/9686
+RUN apk add libstdc++
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["run", "https://deno.land/std/examples/welcome.ts"]
