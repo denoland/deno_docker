@@ -1,6 +1,6 @@
 FROM alpine:3.12.3
 
-ENV DENO_VERSION=1.8.2
+ENV DENO_VERSION=1.8.3
 
 RUN apk add --virtual .download --no-cache curl \
  && curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip \
@@ -15,7 +15,7 @@ RUN apk add --virtual .download --no-cache curl \
 FROM gcr.io/distroless/cc
 COPY --from=0 /bin/deno /bin/deno
 
-ENV DENO_VERSION=1.8.2
+ENV DENO_VERSION=1.8.3
 ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
 
