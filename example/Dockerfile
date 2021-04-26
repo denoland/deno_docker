@@ -1,4 +1,4 @@
-FROM hayd/alpine-deno:1.9.1
+FROM hayd/alpine-deno:1.9.2
 
 # The port that your application listens to.
 EXPOSE 1993
