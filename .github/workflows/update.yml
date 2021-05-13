@@ -2,7 +2,7 @@ name: Update deno
 
 on:
   schedule:
-    - cron:  '0 42 * * *'
+    - cron:  '23 * * * *'
   workflow_dispatch:
 
 jobs:
