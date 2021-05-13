@@ -22,9 +22,5 @@ ENV DENO_INSTALL_ROOT /usr/local
 COPY ./_entry.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 
-# REMOVE ASAP (this is due to dynamic link in deno 1.8.0)
-# https://github.com/denoland/deno/issues/9686
-RUN apk add libstdc++
-
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["run", "https://deno.land/std/examples/welcome.ts"]
