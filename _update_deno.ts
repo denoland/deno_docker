@@ -60,8 +60,6 @@ for (const fn of ["README.md", "example/Dockerfile"]) {
 
 console.log(`Updated to version ${newVersion}`);
 
-throw new Error();
-
 // Stage the changes
 await run(["git", "add", "*.dockerfile", "README.md", "example/Dockerfile"]);
 
