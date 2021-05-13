@@ -11,8 +11,8 @@ RUN apk add --virtual .download --no-cache curl \
  && mv deno /bin/deno \
  && apk del .download
 
-RUN addgroup -g 1993 -S deno \
- && adduser -u 1993 -S deno -G deno \
+RUN addgroup --gid 1000 deno \
+ && adduser --uid 1000 --disabled-password deno --ingroup deno \
  && mkdir /deno-dir/ \
  && chown deno:deno /deno-dir/
 
