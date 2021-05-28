@@ -1,17 +1,15 @@
-# Deno Docker
+# deno_docker
 
-Docker files for [deno](https://github.com/denoland/deno) published on Dockerhub:
+Docker files for [Deno](https://github.com/denoland/deno) published on
+Dockerhub:
 
-- Alpine Linux: [hayd/alpine-deno](https://hub.docker.com/r/hayd/alpine-deno/) (\~28Mb)
-- Centos: [hayd/centos-deno](https://hub.docker.com/r/hayd/centos-deno/) (\~94Mb)
-- Debian: [hayd/debian-deno](https://hub.docker.com/r/hayd/debian-deno/) (\~47Mb)
-- Distroless: [hayd/distroless-deno](https://hub.docker.com/r/hayd/distroless-deno) (\~28Mb)
-- Ubuntu: [hayd/ubuntu-deno](https://hub.docker.com/r/hayd/ubuntu-deno/) (\~50Mb)
+- Alpine Linux: [denoland/deno:alpine](https://hub.docker.com/r/denoland/deno) (default)
+- Centos: [denoland/deno:centos](https://hub.docker.com/r/denoland/deno)
+- Debian: [denoland/deno:debian](https://hub.docker.com/r/denoland/deno)
+- Distroless: [denoland/deno:distroless](https://hub.docker.com/r/denoland/deno)
+- Ubuntu: [denoland/deno:ubuntu](https://hub.docker.com/r/denoland/deno)
 
-![ci status](https://github.com/hayd/deno-docker/workflows/Test/badge.svg?branch=master)
-
-_To run [deno containers on AWS Lambda](https://hub.docker.com/r/hayd/deno-lambda/), see lambda/,
-and the [deno-lambda](https://github.com/hayd/deno-lambda) project._
+![ci status](https://github.com/denoland/deno_docker/workflows/ci/badge.svg?branch=main)
 
 ---
 
@@ -20,19 +18,19 @@ and the [deno-lambda](https://github.com/hayd/deno-lambda) project._
 To start the `deno` repl:
 
 ```sh
-$ docker run -it --init hayd/alpine-deno:1.10.2 repl
+$ docker run -it --init denoland/deno:1.10.2 repl
 ```
 
 To shell into the docker runtime:
 
 ```sh
-$ docker run -it --init --entrypoint sh hayd/alpine-deno:1.10.2
+$ docker run -it --init --entrypoint sh denoland/deno:1.10.2
 ```
 
 To run `main.ts` from your working directory:
 
 ```sh
-$ docker run -it --init -p 1993:1993 -v $PWD:/app hayd/alpine-deno:1.10.2 run --allow-net /app/main.ts
+$ docker run -it --init -p 1993:1993 -v $PWD:/app denoland/deno:1.10.2 run --allow-net /app/main.ts
 ```
 
 Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
@@ -42,7 +40,7 @@ Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
 ## As a Dockerfile
 
 ```Dockerfile
-FROM hayd/alpine-deno:1.10.2
+FROM denoland/deno:1.10.2
 
 # The port that your application listens to.
 EXPOSE 1993
@@ -84,7 +82,7 @@ deno () {
     --volume $PWD:/app \
     --volume $HOME/.deno:/deno-dir \
     --workdir /app \
-    hayd/alpine-deno:1.10.2 \
+    denoland/deno:1.10.2 \
     "$@"
 }
 ```
@@ -101,6 +99,12 @@ $ deno run ./main.ts
 
 See example directory.
 
-Note: Dockerfiles provide a USER `deno` and DENO_DIR is set to `/deno-dir/` (which can be overridden).
+Note: Dockerfiles provide a USER `deno` and DENO_DIR is set to `/deno-dir/`
+(which can be overridden).
 
-_If running multiple deno instances within the same image you can mount this directory as a shared volume._
+_If running multiple Deno instances within the same image you can mount this
+directory as a shared volume._
+
+## Thanks
+
+Thanks to [Andy Hayden](@hayd) for maintaining and setting up these images.
