@@ -3,7 +3,8 @@
 Docker files for [Deno](https://github.com/denoland/deno) published on
 Dockerhub:
 
-- Alpine Linux: [denoland/deno:alpine](https://hub.docker.com/r/denoland/deno) (default)
+- Alpine Linux: [denoland/deno:alpine](https://hub.docker.com/r/denoland/deno)
+  (default)
 - Centos: [denoland/deno:centos](https://hub.docker.com/r/denoland/deno)
 - Debian: [denoland/deno:debian](https://hub.docker.com/r/denoland/deno)
 - Distroless: [denoland/deno:distroless](https://hub.docker.com/r/denoland/deno)
@@ -71,7 +72,8 @@ $ docker build -t app . && docker run -it --init -p 1993:1993 app
 
 ## (optional) Add `deno` alias to your shell
 
-Alternatively, you can add `deno` command to your shell init file (e.g. `.bashrc`):
+Alternatively, you can add `deno` command to your shell init file (e.g.
+`.bashrc`):
 
 ```sh
 deno () {
