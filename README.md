@@ -4,9 +4,8 @@ Docker files for [Deno](https://github.com/denoland/deno) published on
 Dockerhub:
 
 - Alpine Linux: [denoland/deno:alpine](https://hub.docker.com/r/denoland/deno)
-  (default)
 - Centos: [denoland/deno:centos](https://hub.docker.com/r/denoland/deno)
-- Debian: [denoland/deno:debian](https://hub.docker.com/r/denoland/deno)
+- Debian: [denoland/deno:debian](https://hub.docker.com/r/denoland/deno) (default)
 - Distroless: [denoland/deno:distroless](https://hub.docker.com/r/denoland/deno)
 - Ubuntu: [denoland/deno:ubuntu](https://hub.docker.com/r/denoland/deno)
 

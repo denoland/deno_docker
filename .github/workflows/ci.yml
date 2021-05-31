@@ -43,8 +43,10 @@ jobs:
           docker push denoland/deno:${{ matrix.kind }}-${GITHUB_REF#refs/*/}
           docker push denoland/deno:${{ matrix.kind }}
 
-      - name: Push base image (alpine only)
-        if: github.repository == 'denoland/deno_docker' && startsWith(github.ref, 'refs/tags/') && matrix.kind == 'alpine'
+      - name: Push base image (default)
+        if: github.repository == 'denoland/deno_docker' && startsWith(github.ref, 'refs/tags/') && matrix.kind == 'debian'
         run: |
           docker tag ${{ matrix.kind }} denoland/deno:${GITHUB_REF#refs/*/}
+          docker tag ${{ matrix.kind }} denoland/deno:latest
           docker push denoland/deno:${GITHUB_REF#refs/*/}
+          docker push denoland/deno:latest
