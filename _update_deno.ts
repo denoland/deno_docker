@@ -4,7 +4,7 @@ const AUTOROLL_BRANCH = "autoroll";
 function extractVersion() {
 }
 
-await run(["git", "checkout", "origin/master"]);
+await run(["git", "checkout", "origin/main"]);
 
 const currentVersion =
   Deno.readTextFileSync("./debian.dockerfile").match(/DENO_VERSION=(.*)/)![1];
@@ -66,7 +66,7 @@ await run(["git", "add", "*.dockerfile", "README.md", "example/Dockerfile"]);
 // Commit the changes
 await run(["git", "commit", "-m", `Rolling to deno ${newVersion}`]);
 
-// Push to the `hayd/deno-docker#autoroll`
+// Push to the `denoland/deno_docker#autoroll`
 await run(["git", "push", "origin", `+HEAD:${AUTOROLL_BRANCH}`]);
 
 const proc = Deno.run({
