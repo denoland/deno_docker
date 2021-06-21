@@ -1,6 +1,6 @@
 FROM frolvlad/alpine-glibc
 
-ENV DENO_VERSION=1.11.1
+ENV DENO_VERSION=1.11.2
 
 RUN apk add --virtual .download --no-cache curl \
  && curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip \
