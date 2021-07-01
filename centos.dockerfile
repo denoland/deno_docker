@@ -1,6 +1,6 @@
 FROM centos:8
 
-ENV DENO_VERSION=1.11.3
+ENV DENO_VERSION=1.11.4
 
 RUN yum makecache \
  && yum install unzip -y \
