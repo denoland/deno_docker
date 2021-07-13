@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ENV DENO_VERSION=1.11.5
+ENV DENO_VERSION=1.12.0
 
 RUN apt-get -qq update \
  && apt-get upgrade -y -o Dpkg::Options::="--force-confold" \
