@@ -1,6 +1,6 @@
 FROM debian:stable-slim
 
-ENV DENO_VERSION=1.12.2
+ENV DENO_VERSION=1.13.0
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -qq update \
