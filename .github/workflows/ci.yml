@@ -5,8 +5,6 @@ on: [push, pull_request]
 jobs:
   build-bin:
     runs-on: ubuntu-latest
-    outputs:
-      image-digest: ${{ steps.build-and-export.outputs.digest }}
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
@@ -20,6 +18,7 @@ jobs:
         with:
           file: bin.dockerfile
           context: .
+          tags: bin
           outputs: type=docker,dest=/tmp/bin-image.tar
 
       - name: Upload artifact
@@ -48,11 +47,12 @@ jobs:
       - name: Load bin image
         run: |
           docker load --input /tmp/bin-image.tar
+          docker inspect bin
 
       - name: Build image
         run: |
           docker build -f ${{ matrix.kind }}.dockerfile -t ${{ matrix.kind }} \
-            --build-arg BIN_IMAGE=${{ needs.build-bin.outputs.image-digest }} .
+            --build-arg BIN_IMAGE=bin .
           docker run -t ${{ matrix.kind }}
 
       - name: Test basic run
@@ -83,8 +83,8 @@ jobs:
       - name: Push bin image
         if: github.repository == 'denoland/deno_docker' && startsWith(github.ref, 'refs/tags/') && matrix.kind == 'debian'
         run: |
-          docker tag ${{ needs.build-bin.outputs.image-digest }} denoland/deno:bin-${GITHUB_REF#refs/*/}
-          docker tag ${{ needs.build-bin.outputs.image-digest }} denoland/deno:bin
+          docker tag bin denoland/deno:bin-${GITHUB_REF#refs/*/}
+          docker tag bin denoland/deno:bin
           docker push denoland/deno:bin-${GITHUB_REF#refs/*/}
           docker push denoland/deno:bin
 
