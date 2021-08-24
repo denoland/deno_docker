@@ -57,6 +57,8 @@ jobs:
         run: |
           docker run -t ${{ matrix.kind }} deno run https://deno.land/std/examples/welcome.ts
           docker run -t ${{ matrix.kind }} echo 'test entry script'
+          # if typescript is present in the output, then probably deno --version worked
+          docker run -t ${{ matrix.kind }} --version | grep typescript
 
       - name: Login to Docker Hub
         if: github.repository == 'denoland/deno_docker' && startsWith(github.ref, 'refs/tags/')
