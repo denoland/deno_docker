@@ -1,9 +1,11 @@
 ARG DENO_VERSION=1.13.2
 
 
-FROM alpine:3 AS download
+FROM ubuntu:20.04 AS download
 
-RUN apk add --no-cache curl unzip
+RUN apt-get update \
+  && apt-get install -y curl unzip \
+  && rm -rf /var/lib/apt/lists/*
 
 ARG DENO_VERSION
 RUN curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip \
