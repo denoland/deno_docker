@@ -4,6 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build-bin:
+    name: bin
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
