@@ -31,7 +31,7 @@ jobs:
   build:
     needs: build-bin
     name: ${{ matrix.kind }}
-    runs-on: ubuntu-latest-xl
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         kind: ["alpine", "centos", "debian", "distroless", "ubuntu"]
