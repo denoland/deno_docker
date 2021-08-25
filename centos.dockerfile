@@ -5,15 +5,22 @@ ARG BIN_IMAGE=denoland/deno:bin-${DENO_VERSION}
 FROM ${BIN_IMAGE} AS bin
 
 
+FROM buildpack-deps:20.04-curl AS tini-download
+
+ARG TINI_VERSION=0.19.0
+RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static \
+    --output /tini \
+  && chmod +x /tini
+
+
 FROM centos:8
 
 RUN groupadd -g 1993 deno \
   && adduser -u 1993 -g deno deno \
   && mkdir /deno-dir/ \
-  && chown deno:deno /deno-dir/ \
-  && yum update -y \
-  && yum install -y tini \
-  && yum clean all
+  && chown deno:deno /deno-dir/
+
+COPY --from=tini-download /tini /tini
 
 ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
