@@ -9,6 +9,7 @@ Dockerhub:
   (default)
 - Distroless: [denoland/deno:distroless](https://hub.docker.com/r/denoland/deno)
 - Ubuntu: [denoland/deno:ubuntu](https://hub.docker.com/r/denoland/deno)
+- Only the binary: [denoland/deno:bin](https://hub.docker.com/r/denoland/deno)
 
 ![ci status](https://github.com/denoland/deno_docker/workflows/ci/badge.svg?branch=main)
 
@@ -68,6 +69,18 @@ and build and run this locally:
 
 ```sh
 $ docker build -t app . && docker run -it --init -p 1993:1993 app
+```
+
+## Using your own base image
+
+If you prefer to install `deno` in your own base image, you can use the `denoland/deno:bin` to simplify the process.
+
+```Dockerfile
+FROM ubuntu
+
+ARG DENO_VERSION=1.13.2
+
+COPY --from=denoland/deno:bin-${DENO_VERSION} /deno /usr/local/bin/deno
 ```
 
 ## (optional) Add `deno` alias to your shell
