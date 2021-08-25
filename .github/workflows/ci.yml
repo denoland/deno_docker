@@ -46,13 +46,19 @@ jobs:
       - name: Build image
         run: |
           docker build -f ${{ matrix.kind }}.dockerfile --build-arg BIN_IMAGE=bin -t ${{ matrix.kind }} .
+
+      - name: Test default CMD
+        run: |
           docker run -t ${{ matrix.kind }}
 
-      - name: Test basic run
+      - name: Test if entry script forwards to deno binary
         run: |
           docker run -t ${{ matrix.kind }} run https://deno.land/std/examples/welcome.ts
 
-      - name: Test entry script
+          # if typescript is present in the output, then probably deno --version worked
+          docker run -t ${{ matrix.kind }} --version | grep typescript
+
+      - name: Test if entry script forwards to other binaries
         if: ${{ matrix.kind != 'distroless' }}
         run: |
           docker run -t ${{ matrix.kind }} deno run https://deno.land/std/examples/welcome.ts
