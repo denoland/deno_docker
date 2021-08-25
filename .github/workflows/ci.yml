@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build-bin:
     name: bin
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-xl
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
@@ -24,7 +24,7 @@ jobs:
   build:
     needs: build-bin
     name: ${{ matrix.kind }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-xl
     strategy:
       matrix:
         kind: ["alpine", "centos", "debian", "distroless", "ubuntu"]
