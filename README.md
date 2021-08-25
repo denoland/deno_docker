@@ -26,7 +26,7 @@ $ docker run -it denoland/deno:1.13.2 repl
 To shell into the docker runtime:
 
 ```sh
-$ docker run -it --entrypoint sh denoland/deno:1.13.2
+$ docker run -it denoland/deno:1.13.2 sh
 ```
 
 To run `main.ts` from your working directory:
