@@ -45,8 +45,7 @@ jobs:
 
       - name: Build image
         run: |
-          docker build -f ${{ matrix.kind }}.dockerfile -t ${{ matrix.kind }} \
-            --build-arg BIN_IMAGE=bin .
+          docker build -f ${{ matrix.kind }}.dockerfile --build-arg BIN_IMAGE=bin -t ${{ matrix.kind }} .
           docker run -t ${{ matrix.kind }}
 
       - name: Test basic run
