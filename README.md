@@ -20,19 +20,19 @@ Dockerhub:
 To start the `deno` repl:
 
 ```sh
-$ docker run -it --init denoland/deno:1.13.2 repl
+$ docker run -it denoland/deno:1.13.2 repl
 ```
 
 To shell into the docker runtime:
 
 ```sh
-$ docker run -it --init --entrypoint sh denoland/deno:1.13.2
+$ docker run -it --entrypoint sh denoland/deno:1.13.2
 ```
 
 To run `main.ts` from your working directory:
 
 ```sh
-$ docker run -it --init -p 1993:1993 -v $PWD:/app denoland/deno:1.13.2 run --allow-net /app/main.ts
+$ docker run -it -p 1993:1993 -v $PWD:/app denoland/deno:1.13.2 run --allow-net /app/main.ts
 ```
 
 Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
@@ -68,7 +68,7 @@ CMD ["run", "--allow-net", "main.ts"]
 and build and run this locally:
 
 ```sh
-$ docker build -t app . && docker run -it --init -p 1993:1993 app
+$ docker build -t app . && docker run -it -p 1993:1993 app
 ```
 
 ## Using your own base image

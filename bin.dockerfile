@@ -3,7 +3,8 @@ ARG DENO_VERSION=1.13.2
 
 FROM ubuntu:20.04 AS download
 
-RUN apt-get update \
+RUN export DEBIAN_FRONTEND=noninteractive \
+  && apt-get update \
   && apt-get install -y curl unzip \
   && rm -rf /var/lib/apt/lists/*
 

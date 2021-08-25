@@ -9,7 +9,11 @@ FROM debian:stable-slim
 
 RUN useradd --uid 1993 --user-group deno \
   && mkdir /deno-dir/ \
-  && chown deno:deno /deno-dir/
+  && chown deno:deno /deno-dir/ \
+  && export DEBIAN_FRONTEND=noninteractive \
+  && apt-get update \
+  && apt-get install -y tini \
+  && rm -rf /var/lib/apt/lists/*
 
 ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
@@ -21,5 +25,5 @@ COPY --from=bin /deno /usr/bin/deno
 COPY ./_entry.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["tini", "--" "docker-entrypoint.sh"]
 CMD ["run", "https://deno.land/std/examples/welcome.ts"]
