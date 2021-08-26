@@ -8,7 +8,7 @@ FROM ${BIN_IMAGE} AS bin
 FROM buildpack-deps:20.04-curl AS tini
 
 ARG TINI_VERSION=0.19.0
-RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static \
+RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini \
     --output /tini \
   && chmod +x /tini
 
