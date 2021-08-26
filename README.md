@@ -39,7 +39,7 @@ Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
 `-v $PWD:/app` mounts the host working directory to `/app` on the container, and
 `--allow-net /app/main.ts` is passed to deno on the container.
 
-## As a Dockerfile
+## As a base image
 
 ```Dockerfile
 FROM denoland/deno:1.13.2
@@ -58,7 +58,7 @@ COPY deps.ts .
 RUN deno cache deps.ts
 
 # These steps will be re-run upon each file change in your working directory:
-ADD . .
+COPY . .
 # Compile the main app so that it doesn't need to be compiled each startup/entry.
 RUN deno cache main.ts
 
@@ -71,12 +71,47 @@ and build and run this locally:
 $ docker build -t app . && docker run -it --init -p 1993:1993 app
 ```
 
+## Staying low on size
+
+If you have constraints about the size of the docker image, you can reduce some megabytes by using `deno compile`:
+
+```Dockerfile
+FROM hayd/deno:1.9.2 AS build
+
+WORKDIR /app
+
+COPY deps.ts .
+RUN deno cache deps.ts
+
+COPY . .
+RUN deno compile --allow-net --unstable --lite --output /usr/local/bin/app main.ts
+
+
+FROM gcr.io/distroless/cc:latest
+
+COPY --from=build /usr/local/bin/app /usr/local/bin/app
+
+CMD ["/usr/local/bin/app"]
+```
+
+Comparison:
+
+```
+$ container-diff diff daemon://app:normal-distroless daemon://app:compiled-distroless --type=size
+
+-----Size-----
+
+Image size difference between normal and compile:
+SIZE1         SIZE2
+103.4M        75.5M
+```
+
 ## Using your own base image
 
 If you prefer to install `deno` in your own base image, you can use the `denoland/deno:bin` to simplify the process.
 
 ```Dockerfile
-FROM ubuntu
+FROM ubuntu:latest
 
 ARG DENO_VERSION=1.13.2
 
