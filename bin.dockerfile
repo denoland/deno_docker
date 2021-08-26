@@ -1,11 +1,11 @@
 ARG DENO_VERSION=1.13.2
 
 
-FROM ubuntu:20.04 AS download
+FROM buildpack-deps:20.04-curl AS download
 
 RUN export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
-  && apt-get install -y curl unzip \
+  && apt-get install -y unzip \
   && rm -rf /var/lib/apt/lists/*
 
 ARG DENO_VERSION
