@@ -79,7 +79,7 @@ If you prefer to install `deno` in your own base image, you can use the
 ```Dockerfile
 FROM ubuntu
 
-ARG DENO_VERSION=1.14.1
+ARG DENO_VERSION=1.14.2
 
 COPY --from=denoland/deno:bin-${DENO_VERSION} /deno /usr/local/bin/deno
 ```
