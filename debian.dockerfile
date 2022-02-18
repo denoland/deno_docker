@@ -15,16 +15,19 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION
 
 FROM debian:stable-slim
 
-RUN useradd --uid 1993 --user-group deno \
-  && mkdir /deno-dir/ \
-  && chown deno:deno /deno-dir/
+ENV DENO_DIR=/deno-dir/
+ENV DENO_INSTALL_ROOT=/opt/deno/
+ENV PATH="${DENO_INSTALL_ROOT}/bin:${PATH}"
 
-ENV DENO_DIR /deno-dir/
-ENV DENO_INSTALL_ROOT /usr/local
+RUN useradd --uid 1993 --user-group deno \
+  && mkdir "${DENO_DIR}" \
+  && chown deno:deno "${DENO_DIR}" \
+  && mkdir -p "${DENO_INSTALL_ROOT}" \
+  && chown deno:deno "${DENO_INSTALL_ROOT}"
 
 ARG DENO_VERSION
 ENV DENO_VERSION=${DENO_VERSION}
-COPY --from=bin /deno /usr/bin/deno
+COPY --from=bin --chown=deno:deno /deno "${DENO_INSTALL_ROOT}/bin/deno"
 
 COPY --from=tini /tini /tini
 
