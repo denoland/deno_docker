@@ -7,7 +7,7 @@ if [ "$1" != "${1#-}" ]; then
 fi
 
 case "$1" in
-    bundle | cache | compile | completions | coverage | doc | eval | fmt | help | info | install | lint | lsp | repl | run | test | types | upgrade )
+    bundle | cache | compile | completions | coverage | doc | eval | fmt | help | info | install | lint | lsp | repl | run | test | types | uninstall | upgrade | vendor )
     # if the first argument is a known deno command
     exec deno "$@";;
 esac
