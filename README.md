@@ -20,19 +20,19 @@ Dockerhub:
 To start the `deno` repl:
 
 ```sh
-$ docker run -it denoland/deno:1.19.2 repl
+$ docker run -it denoland/deno:1.19.3 repl
 ```
 
 To shell into the docker runtime:
 
 ```sh
-$ docker run -it denoland/deno:1.19.2 sh
+$ docker run -it denoland/deno:1.19.3 sh
 ```
 
 To run `main.ts` from your working directory:
 
 ```sh
-$ docker run -it -p 1993:1993 -v $PWD:/app denoland/deno:1.19.2 run --allow-net /app/main.ts
+$ docker run -it -p 1993:1993 -v $PWD:/app denoland/deno:1.19.3 run --allow-net /app/main.ts
 ```
 
 Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
@@ -42,7 +42,7 @@ Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
 ## As a Dockerfile
 
 ```Dockerfile
-FROM denoland/deno:1.19.2
+FROM denoland/deno:1.19.3
 
 # The port that your application listens to.
 EXPOSE 1993
@@ -79,7 +79,7 @@ If you prefer to install `deno` in your own base image, you can use the
 ```Dockerfile
 FROM ubuntu
 
-ARG DENO_VERSION=1.19.2
+ARG DENO_VERSION=1.19.3
 
 COPY --from=denoland/deno:bin-${DENO_VERSION} /deno /usr/local/bin/deno
 ```
@@ -98,7 +98,7 @@ deno () {
     --volume $PWD:/app \
     --volume $HOME/.deno:/deno-dir \
     --workdir /app \
-    denoland/deno:1.19.2 \
+    denoland/deno:1.19.3 \
     "$@"
 }
 ```
