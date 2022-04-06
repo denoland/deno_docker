@@ -123,4 +123,4 @@ directory as a shared volume._
 
 ## Thanks
 
-Thanks to [Andy Hayden](@hayd) for maintaining and setting up these images.
+Thanks to [Andy Hayden](https://github.com/hayd) for maintaining and setting up these images.
