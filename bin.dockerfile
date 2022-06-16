@@ -1,4 +1,4 @@
-ARG DENO_VERSION=1.22.3
+ARG DENO_VERSION=1.23.0
 
 
 FROM buildpack-deps:20.04-curl AS download
@@ -10,7 +10,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 
 ARG DENO_VERSION
 RUN curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-x86_64-unknown-linux-gnu.zip \
-    --output deno.zip \
+  --output deno.zip \
   && unzip deno.zip \
   && rm deno.zip \
   && chmod 755 deno
