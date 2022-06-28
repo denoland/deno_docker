@@ -111,6 +111,14 @@ $ deno --version
 $ deno run ./main.ts
 ```
 
+## (optional) Add `deno` to your windows shell
+You can also make deno available in your Windows shell, by adding a .bat file to a directory that is in the environment PATH variable:
+
+```bat
+@echo off
+docker run -it --rm -v "%CD%":/app -v "%UserProfile%/.deno":/deno-dir --workdir /app denoland/deno:1.23.1 %*
+```
+
 ---
 
 See example directory.
