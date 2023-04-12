@@ -1,4 +1,4 @@
-version: 1.32.3
+version: 1.32.4
 commit: '%.%.%'
 files:
   README.md:
