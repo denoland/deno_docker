@@ -1,4 +1,4 @@
-ARG DENO_VERSION=1.36.1
+ARG DENO_VERSION=1.36.2
 ARG BIN_IMAGE=denoland/deno:bin-${DENO_VERSION}
 
 
@@ -32,4 +32,4 @@ COPY ./_entry.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["/tini", "--", "docker-entrypoint.sh"]
-CMD ["run", "https://deno.land/std/examples/welcome.ts"]
+CMD ["eval", "console.log('Welcome to Deno!')"]

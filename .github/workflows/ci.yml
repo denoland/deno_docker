@@ -53,7 +53,7 @@ jobs:
 
       - name: Test if entry script forwards to deno binary
         run: |
-          docker run -t ${{ matrix.kind }} run https://deno.land/std/examples/welcome.ts
+          docker run -t ${{ matrix.kind }} eval "console.log('Welcome to Deno!')"
 
           # if typescript is present in the output, then probably deno --version worked
           docker run -t ${{ matrix.kind }} --version | grep typescript
@@ -61,7 +61,7 @@ jobs:
       - name: Test if entry script forwards to other binaries
         if: ${{ matrix.kind != 'distroless' }}
         run: |
-          docker run -t ${{ matrix.kind }} deno run https://deno.land/std/examples/welcome.ts
+          docker run -t ${{ matrix.kind }} deno eval "console.log('Welcome to Deno!')"
           docker run -t ${{ matrix.kind }} echo 'test entry script'
 
       - name: Login to Docker Hub
