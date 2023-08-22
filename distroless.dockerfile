@@ -26,4 +26,4 @@ COPY --from=bin /deno /bin/deno
 COPY --from=tini /tini /tini
 
 ENTRYPOINT ["/tini", "--", "/bin/deno"]
-CMD ["run", "https://deno.land/std/examples/welcome.ts"]
+CMD ["eval", "console.log('Welcome to Deno!')"]
