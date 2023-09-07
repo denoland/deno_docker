@@ -13,7 +13,7 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION
   && chmod +x /tini
 
 
-FROM gcr.io/distroless/cc
+FROM gcr.io/distroless/cc-debian12:latest-amd64
 
 
 ENV DENO_DIR /deno-dir/
