@@ -12,8 +12,16 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION
     --output /tini \
   && chmod +x /tini
 
+FROM gcr.io/distroless/cc-debian12:latest-amd64 AS glibc
 
-FROM frolvlad/alpine-glibc:alpine-3.17
+FROM alpine:3.18
+
+COPY --from=glibc /lib/x86_64-linux-gnu/* /lib/x86_64-linux-gnu/
+COPY --from=glibc /etc/nsswitch.conf /etc/
+COPY --from=glibc /etc/ld.so.conf.d/x86_64-linux-gnu.conf /etc/ld.so.conf.d/
+COPY --from=glibc /usr/lib/x86_64-linux-gnu/gconv/* /usr/lib/x86_64-linux-gnu/gconv/
+
+RUN mkdir /lib64 && ln -s /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 /lib64/
 
 RUN addgroup --gid 1000 deno \
   && adduser --uid 1000 --disabled-password deno --ingroup deno \
