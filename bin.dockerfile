@@ -1,4 +1,4 @@
-ARG DENO_VERSION=1.38.4
+ARG DENO_VERSION=1.38.5
 
 
 FROM buildpack-deps:20.04-curl AS download
