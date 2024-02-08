@@ -13,7 +13,7 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION
   && chmod +x /tini
 
 
-FROM frolvlad/alpine-glibc:alpine-3.17
+FROM frolvlad/alpine-glibc:alpine-3.18
 
 RUN addgroup --gid 1000 deno \
   && adduser --uid 1000 --disabled-password deno --ingroup deno \
