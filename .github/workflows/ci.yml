@@ -51,7 +51,7 @@ jobs:
 
       - name: Build image
         run: |
-          docker buildx build -f bin.dockerfile --platform=linux/amd64,linux/arm64 -t localhost:5000/bin --push .
+          docker buildx build -f bin.dockerfile --provenance=false --platform=linux/amd64,linux/arm64 -t localhost:5000/bin --push .
 
   build:
     needs: build-bin
@@ -104,7 +104,8 @@ jobs:
 
       - name: Test if entry script forwards to deno binary
         run: |
-          docker run -t localhost:5000/${{ matrix.kind }} eval "console.log('Welcome to Deno!')"
+          docker run -t --platform linux/arm64 localhost:5000/${{ matrix.kind }} eval "console.log(`Welcome to Deno ${Deno.build.arch}!`)"
+          docker run -t --platform linux/amd64 localhost:5000/${{ matrix.kind }} eval "console.log(`Welcome to Deno ${Deno.build.arch}!`)"
 
           # if typescript is present in the output, then probably deno --version worked
           docker run -t localhost:5000/${{ matrix.kind }} --version | grep typescript
@@ -112,7 +113,7 @@ jobs:
       - name: Test if entry script forwards to other binaries
         if: ${{ matrix.kind != 'distroless' }}
         run: |
-          docker run -t localhost:5000/${{ matrix.kind }} deno eval "console.log('Welcome to Deno!')"
+          docker run -t localhost:5000/${{ matrix.kind }} deno eval "console.log(`Welcome to Deno ${Deno.build.arch}!`)"
           docker run -t localhost:5000/${{ matrix.kind }} echo 'test entry script'
 
       - name: Login to Docker Hub
