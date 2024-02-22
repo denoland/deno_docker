@@ -122,7 +122,7 @@ jobs:
         run: |
           docker buildx imagetools create localhost:5000/bin -t denoland/deno:bin-${{ github.ref_name }} -t denoland/deno:bin
 
-      - name: Push default image
+      - name: Push default images
         if: github.repository == 'denoland/deno_docker' && github.ref_type == 'tag' && matrix.kind == 'debian'
         run: |
-          docker buildx imagetools create localhost:5000/${{ matrix.kind }} -t denoland/deno:${{ matrix.kind }}-${{ github.ref_name }} -t denoland/deno:latest
+          docker buildx imagetools create localhost:5000/${{ matrix.kind }} -t denoland/deno:${{ github.ref_name }} -t denoland/deno:latest
