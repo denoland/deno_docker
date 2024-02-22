@@ -14,6 +14,7 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION
     --output /tini \
   && chmod +x /tini
 
+FROM gcr.io/distroless/cc as cc
 
 FROM centos:8
 
@@ -22,6 +23,10 @@ RUN groupadd -g 1993 deno \
   && mkdir /deno-dir/ \
   && chown deno:deno /deno-dir/
 
+# CentOS image is EOL, so we need to bump the libm version from distroless. This is a bit
+# of a hack.
+RUN rm /lib64/libm*
+COPY --from=cc --chown=root:root --chmod=755 /lib/*/libm* /lib64/
 
 ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
