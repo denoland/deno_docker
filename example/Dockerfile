@@ -1,4 +1,4 @@
-FROM denoland/deno:1.40.5
+FROM denoland/deno:1.41.0
 
 # The port that your application listens to.
 EXPOSE 1993
