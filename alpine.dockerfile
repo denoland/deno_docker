@@ -18,7 +18,9 @@ FROM gcr.io/distroless/cc as cc
 
 FROM alpine:latest
 
+# Inspired by https://github.com/dojyorin/deno_docker_image/blob/master/src/alpine.dockerfile
 COPY --from=cc --chown=root:root --chmod=755 /lib/*-linux-gnu/* /usr/local/lib/
+COPY --from=cc --chown=root:root --chmod=755 /lib/ld-linux-* /lib/
 
 RUN addgroup --gid 1000 deno \
   && adduser --uid 1000 --disabled-password deno --ingroup deno \
