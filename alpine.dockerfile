@@ -14,14 +14,22 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION
     --output /tini \
   && chmod +x /tini
 
+FROM gcr.io/distroless/cc as cc
 
-FROM frolvlad/alpine-glibc:alpine-3.18
+FROM alpine:latest
+
+# Inspired by https://github.com/dojyorin/deno_docker_image/blob/master/src/alpine.dockerfile
+COPY --from=cc --chown=root:root --chmod=755 /lib/*-linux-gnu/* /usr/local/lib/
+COPY --from=cc --chown=root:root --chmod=755 /lib/ld-linux-* /lib/
 
 RUN addgroup --gid 1000 deno \
   && adduser --uid 1000 --disabled-password deno --ingroup deno \
   && mkdir /deno-dir/ \
-  && chown deno:deno /deno-dir/
+  && chown deno:deno /deno-dir/ \
+  && mkdir /lib64 \
+  && ln -s /usr/local/lib/ld-linux-* /lib64/
 
+ENV LD_LIBRARY_PATH="/usr/local/lib"
 ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
 
