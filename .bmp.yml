@@ -3,7 +3,6 @@ commit: '%.%.%'
 files:
   README.md:
     - 'denoland/deno:%.%.%'
-    - ARG DENO_VERSION=%.%.%
   alpine.dockerfile: ARG DENO_VERSION=%.%.%
   bin.dockerfile: ARG DENO_VERSION=%.%.%
   centos.dockerfile: ARG DENO_VERSION=%.%.%
