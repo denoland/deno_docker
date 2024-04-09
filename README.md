@@ -78,7 +78,7 @@ If you prefer to install `deno` in your own base image, you can use the
 
 ```Dockerfile
 FROM ubuntu
-COPY --from=denoland/deno:1.42.1 /deno /usr/local/bin/deno
+COPY --from=denoland/deno:bin-1.42.1 /deno /usr/local/bin/deno
 ```
 
 ## Running on Google Cloud Run(GCR)
