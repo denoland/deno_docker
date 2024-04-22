@@ -77,19 +77,18 @@ If you prefer to install `deno` in your own base image, you can use the
 `denoland/deno:bin` to simplify the process.
 
 ```Dockerfile
-ARG DENO_VERSION=1.42.4
-
-FROM denoland/deno:bin-$DENO_VERSION AS deno
 FROM ubuntu
-COPY --from=deno /deno /usr/local/bin/deno
+COPY --from=denoland/deno:bin-1.42.4 /deno /usr/local/bin/deno
 ```
 
 ## Running on Google Cloud Run(GCR)
 Due to conflicts with google cloud run caching mechanism it's required to use different path for `DENO_DIR` in your Dockerfile. 
-```
+
+```Dockerfile
 # set DENO_DIR to avoid conflicts with google cloud
 ENV DENO_DIR=./.deno_cache
 ```
+
 Without it GCR instance will try to download deps every time. When running with `--cached-only` you will get `Specified not found in cache`.
 
 ## (optional) Add `deno` alias to your shell
