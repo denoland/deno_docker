@@ -1,4 +1,4 @@
-ARG DENO_VERSION=1.42.4
+ARG DENO_VERSION=1.43.0
 ARG BIN_IMAGE=denoland/deno:bin-${DENO_VERSION}
 
 
@@ -14,7 +14,7 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION
     --output /tini \
   && chmod +x /tini
 
-FROM gcr.io/distroless/cc as cc
+FROM gcr.io/distroless/cc-debian11 as cc
 
 FROM centos:8
 
