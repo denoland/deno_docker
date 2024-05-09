@@ -5,7 +5,7 @@ ARG BIN_IMAGE=denoland/deno:bin-${DENO_VERSION}
 FROM ${BIN_IMAGE} AS bin
 
 
-FROM buildpack-deps:20.04-curl AS tini
+FROM buildpack-deps:22.04-curl AS tini
 
 ARG TINI_VERSION=0.19.0
 ARG TARGETARCH
