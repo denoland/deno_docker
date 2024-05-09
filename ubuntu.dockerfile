@@ -1,11 +1,11 @@
-ARG DENO_VERSION=1.43.1
+ARG DENO_VERSION=1.43.2
 ARG BIN_IMAGE=denoland/deno:bin-${DENO_VERSION}
 
 
 FROM ${BIN_IMAGE} AS bin
 
 
-FROM buildpack-deps:20.04-curl AS tini
+FROM buildpack-deps:22.04-curl AS tini
 
 ARG TINI_VERSION=0.19.0
 ARG TARGETARCH
@@ -15,7 +15,7 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION
   && chmod +x /tini
 
 
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 RUN useradd --uid 1993 --user-group deno \
   && mkdir /deno-dir/ \

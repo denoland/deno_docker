@@ -1,4 +1,4 @@
-version: 1.43.1
+version: 1.43.2
 commit: '%.%.%'
 files:
   README.md:
@@ -6,7 +6,6 @@ files:
     - 'denoland/deno:bin-%.%.%'
   alpine.dockerfile: ARG DENO_VERSION=%.%.%
   bin.dockerfile: ARG DENO_VERSION=%.%.%
-  centos.dockerfile: ARG DENO_VERSION=%.%.%
   debian.dockerfile: ARG DENO_VERSION=%.%.%
   distroless.dockerfile: ARG DENO_VERSION=%.%.%
   example/Dockerfile: 'denoland/deno:%.%.%'

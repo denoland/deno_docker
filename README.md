@@ -4,7 +4,6 @@ Docker files for [Deno](https://github.com/denoland/deno) published on
 Dockerhub:
 
 - Alpine Linux: [denoland/deno:alpine](https://hub.docker.com/r/denoland/deno)
-- Centos: [denoland/deno:centos](https://hub.docker.com/r/denoland/deno)
 - Debian: [denoland/deno:debian](https://hub.docker.com/r/denoland/deno)
   (default)
 - Distroless: [denoland/deno:distroless](https://hub.docker.com/r/denoland/deno)
@@ -20,19 +19,19 @@ Dockerhub:
 To start the `deno` repl:
 
 ```sh
-$ docker run -it denoland/deno:1.43.1 repl
+$ docker run -it denoland/deno:1.43.2 repl
 ```
 
 To shell into the docker runtime:
 
 ```sh
-$ docker run -it denoland/deno:1.43.1 sh
+$ docker run -it denoland/deno:1.43.2 sh
 ```
 
 To run `main.ts` from your working directory:
 
 ```sh
-$ docker run -it -p 1993:1993 -v $PWD:/app denoland/deno:1.43.1 run --allow-net /app/main.ts
+$ docker run -it -p 1993:1993 -v $PWD:/app denoland/deno:1.43.2 run --allow-net /app/main.ts
 ```
 
 Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
@@ -42,7 +41,7 @@ Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
 ## As a Dockerfile
 
 ```Dockerfile
-FROM denoland/deno:1.43.1
+FROM denoland/deno:1.43.2
 
 # The port that your application listens to.
 EXPOSE 1993
@@ -78,7 +77,7 @@ If you prefer to install `deno` in your own base image, you can use the
 
 ```Dockerfile
 FROM ubuntu
-COPY --from=denoland/deno:bin-1.43.1 /deno /usr/local/bin/deno
+COPY --from=denoland/deno:bin-1.43.2 /deno /usr/local/bin/deno
 ```
 
 ## Running on Google Cloud Run(GCR)
@@ -105,7 +104,7 @@ deno () {
     --volume $PWD:/app \
     --volume $HOME/.deno:/deno-dir \
     --workdir /app \
-    denoland/deno:1.43.1 \
+    denoland/deno:1.43.2 \
     "$@"
 }
 ```

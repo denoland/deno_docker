@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        kind: ["alpine", "centos", "debian", "distroless", "ubuntu"]
+        kind: ["alpine", "debian", "distroless", "ubuntu"]
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
