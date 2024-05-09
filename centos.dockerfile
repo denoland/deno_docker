@@ -14,7 +14,7 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION
     --output /tini \
   && chmod +x /tini
 
-FROM gcr.io/distroless/cc-debian11 as cc
+FROM gcr.io/distroless/cc-debian12 as cc
 
 FROM centos:8
 
