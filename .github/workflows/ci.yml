@@ -123,10 +123,17 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Push named images
         if: github.repository == 'denoland/deno_docker' && github.ref_type == 'tag'
         run: |
-          docker buildx imagetools create localhost:5000/${{ matrix.kind }} -t denoland/deno:${{ matrix.kind }}-${{ github.ref_name }} -t denoland/deno:${{ matrix.kind }}
+          docker buildx imagetools create localhost:5000/${{ matrix.kind }} -t docker.io/denoland/deno:${{ matrix.kind }}-${{ github.ref_name }} -t docker.io/denoland/deno:${{ matrix.kind }} -t ghcr.io/denoland/deno:${{ matrix.kind }}-${{ github.ref_name }} -t ghcr.io/denoland/deno:${{ matrix.kind }}
           docker pull --platform linux/amd64 denoland/deno:${{ matrix.kind }}-${{ github.ref_name }} 
           docker pull --platform linux/amd64 denoland/deno:${{ matrix.kind }}
           docker pull --platform linux/arm64 denoland/deno:${{ matrix.kind }}-${{ github.ref_name }} 
