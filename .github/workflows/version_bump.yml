@@ -38,7 +38,7 @@ jobs:
 
       - name: Run version bump
         run: |
-          deno run --allow-read=. --allow-write=. https://deno.land/x/bmp@v0.1.0/cli.ts --${{github.event.inputs.releaseKind}}
+          deno run --allow-read=. --allow-write=. jsr:@kt3k/bmp@0.2.3 --${{github.event.inputs.releaseKind}}
 
       - name: Create PR
         env:
