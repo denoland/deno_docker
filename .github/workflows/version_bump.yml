@@ -42,12 +42,12 @@ jobs:
 
       - name: Run version bump
         run: |
-          deno run --allow-read=. --allow-write=. https://deno.land/x/bmp@v0.1.0/cli.ts --${{github.event.inputs.releaseKind}}
+          deno run --allow-read=. --allow-write=. jsr:@kt3k/bmp@0.2.3 --${{github.event.inputs.releaseKind}}
         if: github.event.inputs.releaseKind != 'none'
 
       - name: Append prerelease id if necessary
         run: |
-          deno run --allow-read=. --allow-write=. https://deno.land/x/bmp@v0.1.0/cli.ts --${{github.event.inputs.releaseKind}}
+          deno run --allow-read=. --allow-write=. jsr:@kt3k/bmp@0.2.3 --${{github.event.inputs.releaseKind}}
         if: github.event.inputs.prerelease
 
       - name: Create PR
