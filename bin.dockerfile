@@ -11,7 +11,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 ARG DENO_VERSION
 ARG TARGETARCH
 
-RUN curl -fsSL https://github.com/denoland/deno/releases/download/v${DENO_VERSION}/deno-$(echo $TARGETARCH | sed -e 's/arm64/aarch64/' -e 's/amd64/x86_64/')-unknown-linux-gnu.zip \
+RUN curl -fsSL https://dl.deno.land/release/v${DENO_VERSION}/deno-$(echo $TARGETARCH | sed -e 's/arm64/aarch64/' -e 's/amd64/x86_64/')-unknown-linux-gnu.zip \
     --output deno.zip \
   && unzip deno.zip \
   && rm deno.zip \
