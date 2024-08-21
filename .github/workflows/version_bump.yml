@@ -5,14 +5,18 @@ on:
   workflow_dispatch:
     inputs:
       releaseKind:
-        description: 'Kind of version bump'
+        description: 'Kind of version upgrade. If you like to only change prerelease id, select "none"'
         default: 'patch'
         type: choice
         options:
         - patch
         - minor
         - major
+        - none
         required: true
+      prereleaseId:
+        description: 'Prerelease id to append. If you don''t need append it, keep this blank'
+        type: string
 
 jobs:
   build:
@@ -39,6 +43,12 @@ jobs:
       - name: Run version bump
         run: |
           deno run --allow-read=. --allow-write=. https://deno.land/x/bmp@v0.1.0/cli.ts --${{github.event.inputs.releaseKind}}
+        if: github.event.inputs.releaseKind != 'none'
+
+      - name: Append prerelease id if necessary
+        run: |
+          deno run --allow-read=. --allow-write=. https://deno.land/x/bmp@v0.1.0/cli.ts --${{github.event.inputs.releaseKind}}
+        if: github.event.inputs.prerelease
 
       - name: Create PR
         env:
