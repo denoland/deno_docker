@@ -45,8 +45,8 @@ jobs:
 
       - name: Append prerelease id if necessary
         run: |
-          deno run --allow-read=. --allow-write=. jsr:@kt3k/bmp@0.2.3 --${{github.event.inputs.releaseKind}}
-        if: github.event.inputs.prerelease
+          deno run --allow-read=. --allow-write=. jsr:@kt3k/bmp@0.2.3 --preid ${{github.event.inputs.prereleaseId}}
+        if: github.event.inputs.prereleaseId
 
       - name: Create PR
         env:
