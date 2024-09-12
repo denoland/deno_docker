@@ -1,4 +1,4 @@
-ARG DENO_VERSION=2.0.0-rc.1
+ARG DENO_VERSION=2.0.0-rc.2
 ARG BIN_IMAGE=denoland/deno:bin-${DENO_VERSION}
 
 
