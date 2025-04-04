@@ -19,19 +19,19 @@ Dockerhub:
 To start the `deno` repl:
 
 ```sh
-$ docker run -it denoland/deno:2.2.6 repl
+$ docker run -it denoland/deno:2.2.7 repl
 ```
 
 To shell into the docker runtime:
 
 ```sh
-$ docker run -it denoland/deno:2.2.6 sh
+$ docker run -it denoland/deno:2.2.7 sh
 ```
 
 To run `main.ts` from your working directory:
 
 ```sh
-$ docker run -it -p 1993:1993 -v $PWD:/app denoland/deno:2.2.6 run --allow-net /app/main.ts
+$ docker run -it -p 1993:1993 -v $PWD:/app denoland/deno:2.2.7 run --allow-net /app/main.ts
 ```
 
 Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
@@ -41,7 +41,7 @@ Here, `-p 1993:1993` maps port 1993 on the container to 1993 on the host,
 ## As a Dockerfile
 
 ```Dockerfile
-FROM denoland/deno:2.2.6
+FROM denoland/deno:2.2.7
 
 # The port that your application listens to.
 EXPOSE 1993
@@ -77,7 +77,7 @@ If you prefer to install `deno` in your own base image, you can use the
 
 ```Dockerfile
 FROM ubuntu
-COPY --from=denoland/deno:bin-2.2.6 /deno /usr/local/bin/deno
+COPY --from=denoland/deno:bin-2.2.7 /deno /usr/local/bin/deno
 ```
 
 ## Running on Google Cloud Run(GCR)
@@ -104,7 +104,7 @@ deno () {
     --volume $PWD:/app \
     --volume $HOME/.deno:/deno-dir \
     --workdir /app \
-    denoland/deno:2.2.6 \
+    denoland/deno:2.2.7 \
     "$@"
 }
 ```
