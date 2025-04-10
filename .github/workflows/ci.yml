@@ -150,11 +150,11 @@ jobs:
           docker pull --platform linux/arm64 denoland/deno:${{ github.ref_name }}
           docker pull --platform linux/arm64 denoland/deno:latest
 
-      - name: Update Docker Hub Description
-        if: github.repository == 'denoland/deno_docker' && github.ref_type == 'tag' && matrix.kind == 'debian' # Only on a tag and once per run (on debian run)
-        uses: peter-evans/dockerhub-description@e98e4d1628a5f3be2be7c231e50981aee98723ae # v4.0.0
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          repository: denoland/deno
-          short-description: ${{ github.event.repository.description }}
+      # - name: Update Docker Hub Description
+      #   if: github.repository == 'denoland/deno_docker' && github.ref_type == 'tag' && matrix.kind == 'debian' # Only on a tag and once per run (on debian run)
+      #   uses: peter-evans/dockerhub-description@e98e4d1628a5f3be2be7c231e50981aee98723ae # v4.0.0
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      #     repository: denoland/deno
+      #     short-description: ${{ github.event.repository.description }}
