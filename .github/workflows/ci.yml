@@ -135,20 +135,16 @@ jobs:
       - name: Push bin image
         if: github.repository == 'denoland/deno_docker' && github.ref_type == 'tag' && matrix.kind == 'debian'
         run: |
-          docker buildx imagetools create localhost:5000/bin -t denoland/deno:bin-${{ github.ref_name }} -t denoland/deno:bin
+          docker buildx imagetools create localhost:5000/bin -t denoland/deno:bin-${{ github.ref_name }}
           docker pull --platform linux/amd64 denoland/deno:bin-${{ github.ref_name }}
-          docker pull --platform linux/amd64 denoland/deno:bin
           docker pull --platform linux/arm64 denoland/deno:bin-${{ github.ref_name }}
-          docker pull --platform linux/arm64 denoland/deno:bin
 
       - name: Push default images
         if: github.repository == 'denoland/deno_docker' && github.ref_type == 'tag' && matrix.kind == 'debian'
         run: |
-          docker buildx imagetools create localhost:5000/${{ matrix.kind }} -t denoland/deno:${{ github.ref_name }} -t denoland/deno:latest
+          docker buildx imagetools create localhost:5000/${{ matrix.kind }} -t denoland/deno:${{ github.ref_name }}
           docker pull --platform linux/amd64 denoland/deno:${{ github.ref_name }}
-          docker pull --platform linux/amd64 denoland/deno:latest
           docker pull --platform linux/arm64 denoland/deno:${{ github.ref_name }}
-          docker pull --platform linux/arm64 denoland/deno:latest
 
       # - name: Update Docker Hub Description
       #   if: github.repository == 'denoland/deno_docker' && github.ref_type == 'tag' && matrix.kind == 'debian' # Only on a tag and once per run (on debian run)
