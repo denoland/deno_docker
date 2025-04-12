@@ -1,6 +1,4 @@
 name: set_docker_tags
-permissions:
-  contents: write
 on:
   workflow_dispatch:
     inputs:
