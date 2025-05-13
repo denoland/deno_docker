@@ -126,11 +126,9 @@ jobs:
       - name: Push named images
         if: github.repository == 'denoland/deno_docker' && github.ref_type == 'tag'
         run: |
-          docker buildx imagetools create localhost:5000/${{ matrix.kind }} -t denoland/deno:${{ matrix.kind }}-${{ github.ref_name }} -t denoland/deno:${{ matrix.kind }}
+          docker buildx imagetools create localhost:5000/${{ matrix.kind }} -t denoland/deno:${{ matrix.kind }}-${{ github.ref_name }}
           docker pull --platform linux/amd64 denoland/deno:${{ matrix.kind }}-${{ github.ref_name }} 
-          docker pull --platform linux/amd64 denoland/deno:${{ matrix.kind }}
           docker pull --platform linux/arm64 denoland/deno:${{ matrix.kind }}-${{ github.ref_name }} 
-          docker pull --platform linux/arm64 denoland/deno:${{ matrix.kind }}
 
       - name: Push bin image
         if: github.repository == 'denoland/deno_docker' && github.ref_type == 'tag' && matrix.kind == 'debian'
