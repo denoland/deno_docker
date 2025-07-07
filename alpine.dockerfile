@@ -30,6 +30,7 @@ RUN addgroup --gid 1000 deno \
   && ln -s /usr/local/lib/ld-linux-* /lib64/
 
 ENV LD_LIBRARY_PATH="/usr/local/lib"
+ENV DENO_USE_CGROUPS=1
 ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
 

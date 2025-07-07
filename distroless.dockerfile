@@ -17,7 +17,7 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION
 
 FROM gcr.io/distroless/cc
 
-
+ENV DENO_USE_CGROUPS=1
 ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
 

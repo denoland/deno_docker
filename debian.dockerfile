@@ -21,6 +21,7 @@ RUN useradd --uid 1993 --user-group deno \
   && mkdir /deno-dir/ \
   && chown deno:deno /deno-dir/
 
+ENV DENO_USE_CGROUPS=1
 ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
 
