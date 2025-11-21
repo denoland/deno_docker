@@ -19,17 +19,15 @@ FROM gcr.io/distroless/cc as cc
 FROM alpine:latest
 
 # Inspired by https://github.com/dojyorin/deno_docker_image/blob/master/src/alpine.dockerfile
-COPY --from=cc --chown=root:root --chmod=755 /lib/*-linux-gnu/* /usr/local/lib/
-COPY --from=cc --chown=root:root --chmod=755 /lib/ld-linux-* /lib/
+COPY --from=cc --chown=root:root --chmod=755 /lib /lib
 
 RUN addgroup --gid 1000 deno \
   && adduser --uid 1000 --disabled-password deno --ingroup deno \
   && mkdir /deno-dir/ \
   && chown deno:deno /deno-dir/ \
   && mkdir /lib64 \
-  && ln -s /usr/local/lib/ld-linux-* /lib64/
+  && ln -s /lib/$(arch)-linux-gnu/ld-linux-* /lib64/
 
-ENV LD_LIBRARY_PATH="/usr/local/lib"
 ENV DENO_USE_CGROUPS=1
 ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
