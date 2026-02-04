@@ -14,7 +14,7 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION
     --output /tini \
   && chmod +x /tini
 
-FROM gcr.io/distroless/cc as cc
+FROM gcr.io/distroless/cc@sha256:66d87e170bc2c5e2b8cf853501141c3c55b4e502b8677595c57534df54a68cc5 as cc
 
 FROM alpine:latest
 
