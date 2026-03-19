@@ -158,3 +158,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           repository: denoland/deno
           short-description: ${{ github.event.repository.description }}
+          readme-filepath: ./README.md
