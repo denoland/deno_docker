@@ -27,5 +27,12 @@ COPY --from=bin /deno /bin/deno
 
 COPY --from=tini /tini /tini
 
+LABEL org.opencontainers.image.title="Deno" \
+      org.opencontainers.image.description="Deno Docker image (Distroless)" \
+      org.opencontainers.image.url="https://github.com/denoland/deno_docker" \
+      org.opencontainers.image.source="https://github.com/denoland/deno_docker" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.version="${DENO_VERSION}"
+
 ENTRYPOINT ["/tini", "--", "/bin/deno"]
 CMD ["eval", "console.log('Welcome to Deno!')"]

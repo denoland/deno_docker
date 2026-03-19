@@ -23,4 +23,11 @@ FROM scratch
 ARG DENO_VERSION
 ENV DENO_VERSION=${DENO_VERSION}
 
+LABEL org.opencontainers.image.title="Deno" \
+      org.opencontainers.image.description="Deno binary image" \
+      org.opencontainers.image.url="https://github.com/denoland/deno_docker" \
+      org.opencontainers.image.source="https://github.com/denoland/deno_docker" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.version="${DENO_VERSION}"
+
 COPY --from=download /deno /deno
