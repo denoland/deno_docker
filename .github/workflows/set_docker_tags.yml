@@ -39,18 +39,9 @@ jobs:
 
       - name: Set tags to version
         run: |
-          docker buildx imagetools create -t denoland/deno:latest denoland/deno:${{github.event.inputs.version}}
-          docker buildx imagetools create -t denoland/deno:debian denoland/deno:${{github.event.inputs.version}}
-          docker buildx imagetools create -t denoland/deno:alpine denoland/deno:alpine-${{github.event.inputs.version}}
-          docker buildx imagetools create -t denoland/deno:bin denoland/deno:bin-${{github.event.inputs.version}}
-          docker buildx imagetools create -t denoland/deno:distroless denoland/deno:distroless-${{github.event.inputs.version}}
-          docker buildx imagetools create -t denoland/deno:ubuntu denoland/deno:ubuntu-${{github.event.inputs.version}}
-
-      - name: Set GHCR tags to version
-        run: |
-          docker buildx imagetools create -t ghcr.io/denoland/deno:latest ghcr.io/denoland/deno:${{github.event.inputs.version}}
-          docker buildx imagetools create -t ghcr.io/denoland/deno:debian ghcr.io/denoland/deno:${{github.event.inputs.version}}
-          docker buildx imagetools create -t ghcr.io/denoland/deno:alpine ghcr.io/denoland/deno:alpine-${{github.event.inputs.version}}
-          docker buildx imagetools create -t ghcr.io/denoland/deno:bin ghcr.io/denoland/deno:bin-${{github.event.inputs.version}}
-          docker buildx imagetools create -t ghcr.io/denoland/deno:distroless ghcr.io/denoland/deno:distroless-${{github.event.inputs.version}}
-          docker buildx imagetools create -t ghcr.io/denoland/deno:ubuntu ghcr.io/denoland/deno:ubuntu-${{github.event.inputs.version}}
+          docker buildx imagetools create -t denoland/deno:latest -t ghcr.io/denoland/deno:latest denoland/deno:${{github.event.inputs.version}}
+          docker buildx imagetools create -t denoland/deno:debian -t ghcr.io/denoland/deno:debian denoland/deno:${{github.event.inputs.version}}
+          docker buildx imagetools create -t denoland/deno:alpine -t ghcr.io/denoland/deno:alpine denoland/deno:alpine-${{github.event.inputs.version}}
+          docker buildx imagetools create -t denoland/deno:bin -t ghcr.io/denoland/deno:bin denoland/deno:bin-${{github.event.inputs.version}}
+          docker buildx imagetools create -t denoland/deno:distroless -t ghcr.io/denoland/deno:distroless denoland/deno:distroless-${{github.event.inputs.version}}
+          docker buildx imagetools create -t denoland/deno:ubuntu -t ghcr.io/denoland/deno:ubuntu denoland/deno:ubuntu-${{github.event.inputs.version}}
