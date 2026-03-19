@@ -1,10 +1,14 @@
-import { serve } from "./deps.ts";
+import express from "express";
+import chalk from "chalk";
+import { upperCase } from "lodash-es";
 
 const PORT = 1993;
-const s = serve(`0.0.0.0:${PORT}`);
-const body = new TextEncoder().encode("Hello World\n");
+const app = express();
 
-console.log(`Server started on port ${PORT}`);
-for await (const req of s) {
-  req.respond({ body });
-}
+app.get("/", (_req, res) => {
+  res.send(upperCase("Hello World") + "\n");
+});
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(chalk.green(`Server started on port ${PORT}`));
+});
