@@ -19,7 +19,9 @@ FROM gcr.io/distroless/cc@sha256:66d87e170bc2c5e2b8cf853501141c3c55b4e502b867759
 FROM alpine:latest
 
 # Inspired by https://github.com/dojyorin/deno_docker_image/blob/master/src/alpine.dockerfile
-COPY --from=cc --chown=root:root --chmod=755 /lib/*-linux-gnu/* /usr/local/lib/
+# glibc libs are placed in an isolated directory to avoid conflicting with
+# Alpine's musl-based packages (e.g. node, ffmpeg).
+COPY --from=cc --chown=root:root --chmod=755 /lib/*-linux-gnu/* /usr/local/lib/glibc/
 COPY --from=cc --chown=root:root --chmod=755 /lib/ld-linux-* /lib/
 
 RUN addgroup --gid 1000 deno \
@@ -27,9 +29,8 @@ RUN addgroup --gid 1000 deno \
   && mkdir /deno-dir/ \
   && chown deno:deno /deno-dir/ \
   && mkdir /lib64 \
-  && ln -s /usr/local/lib/ld-linux-* /lib64/
+  && ln -s /usr/local/lib/glibc/ld-linux-* /lib64/
 
-ENV LD_LIBRARY_PATH="/usr/local/lib"
 ENV DENO_USE_CGROUPS=1
 ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
@@ -37,8 +38,12 @@ ENV DENO_INSTALL_ROOT /usr/local
 ARG DENO_VERSION
 ENV DENO_VERSION=${DENO_VERSION}
 COPY --from=bin /deno /bin/deno
-
 COPY --from=tini /tini /tini
+
+RUN apk add --no-cache patchelf \
+  && patchelf --set-rpath /usr/local/lib/glibc /bin/deno \
+  && patchelf --set-rpath /usr/local/lib/glibc /tini \
+  && apk del patchelf
 
 COPY ./_entry.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
