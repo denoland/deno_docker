@@ -1,8 +1,5 @@
 name: ci
 
-permissions:
-  packages: write
-
 on:
   # Run on any push to main or any tag
   push:
@@ -58,6 +55,8 @@ jobs:
 
   build:
     needs: build-bin
+    permissions:
+      packages: write
     name: ${{ matrix.kind }}
     runs-on: ubuntu-latest
     strategy:

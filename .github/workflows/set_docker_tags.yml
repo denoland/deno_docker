@@ -1,8 +1,5 @@
 name: set_docker_tags
 
-permissions:
-  packages: write
-
 on:
   workflow_dispatch:
     inputs:
@@ -14,6 +11,8 @@ on:
 jobs:
   set_tags:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
