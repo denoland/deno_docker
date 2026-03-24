@@ -1,4 +1,4 @@
-ARG DENO_VERSION=2.7.6
+ARG DENO_VERSION=2.7.7
 ARG BIN_IMAGE=denoland/deno:bin-${DENO_VERSION}
 
 
@@ -30,6 +30,13 @@ ENV DENO_VERSION=${DENO_VERSION}
 COPY --from=bin /deno /usr/bin/deno
 
 COPY --from=tini /tini /tini
+
+LABEL org.opencontainers.image.title="Deno" \
+      org.opencontainers.image.description="Deno Docker image (Ubuntu)" \
+      org.opencontainers.image.url="https://github.com/denoland/deno_docker" \
+      org.opencontainers.image.source="https://github.com/denoland/deno_docker" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.version="${DENO_VERSION}"
 
 COPY ./_entry.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh

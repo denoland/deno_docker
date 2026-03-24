@@ -1,4 +1,5 @@
 name: set_docker_tags
+
 on:
   workflow_dispatch:
     inputs:
@@ -10,6 +11,8 @@ on:
 jobs:
   set_tags:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -22,15 +25,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Check if source image exists
         run: |
           docker manifest inspect denoland/deno:${{ github.event.inputs.version }} > /dev/null
 
       - name: Set tags to version
         run: |
-          docker buildx imagetools create -t denoland/deno:latest denoland/deno:${{github.event.inputs.version}}
-          docker buildx imagetools create -t denoland/deno:debian denoland/deno:${{github.event.inputs.version}}
-          docker buildx imagetools create -t denoland/deno:alpine denoland/deno:alpine-${{github.event.inputs.version}}
-          docker buildx imagetools create -t denoland/deno:bin denoland/deno:bin-${{github.event.inputs.version}}
-          docker buildx imagetools create -t denoland/deno:distroless denoland/deno:distroless-${{github.event.inputs.version}}
-          docker buildx imagetools create -t denoland/deno:ubuntu denoland/deno:ubuntu-${{github.event.inputs.version}}
+          docker buildx imagetools create -t denoland/deno:latest -t ghcr.io/denoland/deno:latest denoland/deno:${{github.event.inputs.version}}
+          docker buildx imagetools create -t denoland/deno:debian -t ghcr.io/denoland/deno:debian denoland/deno:${{github.event.inputs.version}}
+          docker buildx imagetools create -t denoland/deno:alpine -t ghcr.io/denoland/deno:alpine denoland/deno:alpine-${{github.event.inputs.version}}
+          docker buildx imagetools create -t denoland/deno:bin -t ghcr.io/denoland/deno:bin denoland/deno:bin-${{github.event.inputs.version}}
+          docker buildx imagetools create -t denoland/deno:distroless -t ghcr.io/denoland/deno:distroless denoland/deno:distroless-${{github.event.inputs.version}}
+          docker buildx imagetools create -t denoland/deno:ubuntu -t ghcr.io/denoland/deno:ubuntu denoland/deno:ubuntu-${{github.event.inputs.version}}

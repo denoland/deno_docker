@@ -1,4 +1,4 @@
-ARG DENO_VERSION=2.7.6
+ARG DENO_VERSION=2.7.7
 ARG BIN_IMAGE=denoland/deno:bin-${DENO_VERSION}
 
 
@@ -44,6 +44,13 @@ RUN apk add --no-cache patchelf \
   && patchelf --set-rpath /usr/local/lib/glibc /bin/deno \
   && patchelf --set-rpath /usr/local/lib/glibc /tini \
   && apk del patchelf
+
+LABEL org.opencontainers.image.title="Deno" \
+      org.opencontainers.image.description="Deno Docker image (Alpine)" \
+      org.opencontainers.image.url="https://github.com/denoland/deno_docker" \
+      org.opencontainers.image.source="https://github.com/denoland/deno_docker" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.version="${DENO_VERSION}"
 
 COPY ./_entry.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
