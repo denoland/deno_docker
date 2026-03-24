@@ -141,6 +141,10 @@ jobs:
           docker pull --platform linux/amd64 denoland/deno:${{ matrix.kind }}
           docker pull --platform linux/arm64 denoland/deno:${{ matrix.kind }}-${{ github.ref_name }}
           docker pull --platform linux/arm64 denoland/deno:${{ matrix.kind }}
+          docker pull --platform linux/amd64 ghcr.io/denoland/deno:${{ matrix.kind }}-${{ github.ref_name }}
+          docker pull --platform linux/amd64 ghcr.io/denoland/deno:${{ matrix.kind }}
+          docker pull --platform linux/arm64 ghcr.io/denoland/deno:${{ matrix.kind }}-${{ github.ref_name }}
+          docker pull --platform linux/arm64 ghcr.io/denoland/deno:${{ matrix.kind }}
 
       - name: Push bin image
         if: github.repository == 'denoland/deno_docker' && github.ref_type == 'tag' && matrix.kind == 'debian'
@@ -150,6 +154,10 @@ jobs:
           docker pull --platform linux/amd64 denoland/deno:bin
           docker pull --platform linux/arm64 denoland/deno:bin-${{ github.ref_name }}
           docker pull --platform linux/arm64 denoland/deno:bin
+          docker pull --platform linux/amd64 ghcr.io/denoland/deno:bin-${{ github.ref_name }}
+          docker pull --platform linux/amd64 ghcr.io/denoland/deno:bin
+          docker pull --platform linux/arm64 ghcr.io/denoland/deno:bin-${{ github.ref_name }}
+          docker pull --platform linux/arm64 ghcr.io/denoland/deno:bin
 
       - name: Push default images
         if: github.repository == 'denoland/deno_docker' && github.ref_type == 'tag' && matrix.kind == 'debian'
@@ -159,6 +167,10 @@ jobs:
           docker pull --platform linux/amd64 denoland/deno:latest
           docker pull --platform linux/arm64 denoland/deno:${{ github.ref_name }}
           docker pull --platform linux/arm64 denoland/deno:latest
+          docker pull --platform linux/amd64 ghcr.io/denoland/deno:${{ github.ref_name }}
+          docker pull --platform linux/amd64 ghcr.io/denoland/deno:latest
+          docker pull --platform linux/arm64 ghcr.io/denoland/deno:${{ github.ref_name }}
+          docker pull --platform linux/arm64 ghcr.io/denoland/deno:latest
 
       - name: Update Docker Hub Description
         if: github.repository == 'denoland/deno_docker' && github.ref_type == 'tag' && matrix.kind == 'debian' # Only on a tag and once per run (on debian run)
