@@ -11,7 +11,12 @@ ARG TINI_VERSION=0.19.0
 ARG TARGETARCH
 
 RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-${TARGETARCH} \
-    --output /tini \
+    --output /tini-${TARGETARCH} \
+  && curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-${TARGETARCH}.sha256sum \
+    --output /tini-${TARGETARCH}.sha256sum \
+  && cd / && sha256sum -c tini-${TARGETARCH}.sha256sum \
+  && mv /tini-${TARGETARCH} /tini \
+  && rm /tini-${TARGETARCH}.sha256sum \
   && chmod +x /tini
 
 FROM gcr.io/distroless/cc@sha256:66d87e170bc2c5e2b8cf853501141c3c55b4e502b8677595c57534df54a68cc5 as cc

@@ -11,10 +11,15 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 ARG DENO_VERSION
 ARG TARGETARCH
 
-RUN curl -fsSL https://dl.deno.land/release/v${DENO_VERSION}/deno-$(echo $TARGETARCH | sed -e 's/arm64/aarch64/' -e 's/amd64/x86_64/')-unknown-linux-gnu.zip \
-    --output deno.zip \
-  && unzip deno.zip \
-  && rm deno.zip \
+RUN export DENO_TARGET=$(echo $TARGETARCH | sed -e 's/arm64/aarch64/' -e 's/amd64/x86_64/') \
+  && export DENO_ZIP=deno-${DENO_TARGET}-unknown-linux-gnu.zip \
+  && curl -fsSL https://dl.deno.land/release/v${DENO_VERSION}/${DENO_ZIP} \
+    --output ${DENO_ZIP} \
+  && curl -fsSL https://dl.deno.land/release/v${DENO_VERSION}/${DENO_ZIP}.sha256sum \
+    --output ${DENO_ZIP}.sha256sum \
+  && sha256sum -c ${DENO_ZIP}.sha256sum \
+  && unzip ${DENO_ZIP} \
+  && rm ${DENO_ZIP} ${DENO_ZIP}.sha256sum \
   && chmod 755 deno
 
 
