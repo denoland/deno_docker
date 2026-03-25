@@ -1,16 +1,21 @@
 # deno_docker
 
 Docker files for [Deno](https://github.com/denoland/deno) published on
-Dockerhub:
+[Docker Hub](https://hub.docker.com/r/denoland/deno) and
+[GHCR](https://github.com/denoland/deno/pkgs/container/deno):
 
-- Alpine Linux: [denoland/deno:alpine](https://hub.docker.com/r/denoland/deno)
-- Debian: [denoland/deno:debian](https://hub.docker.com/r/denoland/deno)
-  (default)
-- Distroless: [denoland/deno:distroless](https://hub.docker.com/r/denoland/deno)
-- Ubuntu: [denoland/deno:ubuntu](https://hub.docker.com/r/denoland/deno)
-- Only the binary: [denoland/deno:bin](https://hub.docker.com/r/denoland/deno)
+- Alpine Linux: `denoland/deno:alpine`
+- Debian: `denoland/deno:debian` (default)
+- Distroless: `denoland/deno:distroless`
+- Ubuntu: `denoland/deno:ubuntu`
+- Only the binary: `denoland/deno:bin`
 
-![ci status](https://github.com/denoland/deno_docker/workflows/ci/badge.svg?branch=main)
+Images are available from both registries:
+
+```sh
+docker pull denoland/deno:2.7.8        # Docker Hub
+docker pull ghcr.io/denoland/deno:2.7.8 # GHCR
+```
 
 ---
 
@@ -48,20 +53,19 @@ EXPOSE 1993
 
 WORKDIR /app
 
-# Prefer not to run as root.
-USER deno
-
-# Cache the dependencies as a layer (the following two steps are re-run only when deps.ts is modified).
-# Ideally cache deps.ts will download and compile _all_ external files used in main.ts.
-COPY deps.ts .
-RUN deno install --entrypoint deps.ts
+# Cache dependencies as a layer (re-run only when package.json changes).
+COPY package.json .
+RUN deno install
 
 # These steps will be re-run upon each file change in your working directory:
 COPY . .
 # Compile the main app so that it doesn't need to be compiled each startup/entry.
 RUN deno cache main.ts
 
-CMD ["run", "--allow-net", "main.ts"]
+# Prefer not to run as root.
+USER deno
+
+CMD ["run", "--allow-net", "--allow-read", "--allow-env", "main.ts"]
 ```
 
 and build and run this locally:
@@ -127,7 +131,3 @@ Note: Dockerfiles provide a USER `deno` and DENO_DIR is set to `/deno-dir/`
 _If running multiple Deno instances within the same image you can mount this
 directory as a shared volume._
 
-## Thanks
-
-Thanks to [Andy Hayden](https://github.com/hayd) for maintaining and setting up
-these images.
