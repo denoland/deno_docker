@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "express": "^4.21.0",
+    "chalk": "^5.4.0",
+    "lodash-es": "^4.17.21"
+  }
+}
