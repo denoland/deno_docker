@@ -19,7 +19,17 @@ RUN curl -fsSL https://github.com/krallin/tini/releases/download/v${TINI_VERSION
   && rm /tini-${TARGETARCH}.sha256sum \
   && chmod +x /tini
 
-FROM gcr.io/distroless/cc@sha256:66d87e170bc2c5e2b8cf853501141c3c55b4e502b8677595c57534df54a68cc5 as cc
+FROM gcr.io/distroless/cc@sha256:66d87e170bc2c5e2b8cf853501141c3c55b4e502b8677595c57534df54a68cc5 AS cc
+
+
+FROM alpine:latest AS patcher
+
+COPY --from=bin /deno /deno
+COPY --from=tini /tini /tini
+RUN apk add --no-cache patchelf \
+  && patchelf --set-rpath /usr/local/lib/glibc /deno \
+  && patchelf --set-rpath /usr/local/lib/glibc /tini
+
 
 FROM alpine:latest
 
@@ -42,13 +52,8 @@ ENV DENO_INSTALL_ROOT /usr/local
 
 ARG DENO_VERSION
 ENV DENO_VERSION=${DENO_VERSION}
-COPY --from=bin /deno /bin/deno
-COPY --from=tini /tini /tini
-
-RUN apk add --no-cache patchelf \
-  && patchelf --set-rpath /usr/local/lib/glibc /bin/deno \
-  && patchelf --set-rpath /usr/local/lib/glibc /tini \
-  && apk del patchelf
+COPY --from=patcher /deno /bin/deno
+COPY --from=patcher /tini /tini
 
 LABEL org.opencontainers.image.title="Deno" \
       org.opencontainers.image.description="Deno Docker image (Alpine)" \
