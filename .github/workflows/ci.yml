@@ -21,13 +21,13 @@ jobs:
         uses: actions/checkout@v7
       
       - name: Cache docker registry
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           key: registry-${{ github.sha }}
           path: ${{ runner.temp }}/registry
 
       - name: Cache Docker layers
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: /tmp/.buildx-cache
           # Key is named differently to avoid collision
@@ -67,14 +67,14 @@ jobs:
         uses: actions/checkout@v7
       
       - name: Cache docker registry
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           key: registry-${{ github.sha }}
           fail-on-cache-miss: true
           path: ${{ runner.temp }}/registry
 
       - name: Cache Docker layers
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: /tmp/.buildx-cache
           # Key is named differently to avoid collision
