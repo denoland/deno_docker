@@ -46,6 +46,16 @@ RUN addgroup --gid 1000 deno \
   && mkdir /lib64 \
   && ln -s /usr/local/lib/glibc/ld-linux-* /lib64/
 
+# Generate a glibc ld.so.cache so glibc binaries that are NOT rpath-patched
+# (e.g. the output of `deno compile`) can find the isolated glibc libs. musl's
+# loader ignores /etc/ld.so.cache, so this stays invisible to Alpine's musl
+# packages and does not reintroduce the conflict the isolation above avoids.
+COPY --from=tini /usr/sbin/ldconfig.real /tmp/ldconfig
+RUN echo "/usr/local/lib/glibc" > /etc/ld.so.conf \
+  && /lib64/ld-linux-*.so.* --library-path /usr/local/lib/glibc \
+    /tmp/ldconfig -C /etc/ld.so.cache -f /etc/ld.so.conf \
+  && rm /tmp/ldconfig
+
 ENV DENO_USE_CGROUPS=1
 ENV DENO_DIR /deno-dir/
 ENV DENO_INSTALL_ROOT /usr/local
