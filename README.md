@@ -53,17 +53,21 @@ EXPOSE 1993
 
 WORKDIR /app
 
+# give deno user ownership first
+RUN chown -R deno:deno /app
+
 # Cache dependencies as a layer (re-run only when package.json changes).
 COPY package.json .
+
+# Prefer not to run as root.
+USER deno
+
 RUN deno install
 
 # These steps will be re-run upon each file change in your working directory:
 COPY . .
 # Compile the main app so that it doesn't need to be compiled each startup/entry.
 RUN deno cache main.ts
-
-# Prefer not to run as root.
-USER deno
 
 CMD ["run", "--allow-net", "--allow-read", "--allow-env", "main.ts"]
 ```
